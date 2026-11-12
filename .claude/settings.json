@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./**/.env)",
+      "Read(./**/.env.*)",
+      "Edit(./**/.env)",
+      "Edit(./**/.env.*)",
+      "Read(./**/application-local.yaml)",
+      "Read(./**/application-local.yml)",
+      "Edit(./**/application-local.yaml)",
+      "Edit(./**/application-local.yml)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Read(./**/*.p12)",
+      "Read(./**/*.jks)",
+      "Read(./**/secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.oci/**)",
+      "Read(~/.aws/**)"
+    ]
+  }
+}

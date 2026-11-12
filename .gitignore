@@ -1,0 +1,10 @@
+# 비밀값
+.env
+.env.*
+
+# IDE
+.idea/
+*.iml
+
+# macOS
+.DS_Store
