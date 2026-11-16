@@ -1,7 +1,7 @@
 # 게임 목록 화면 (스프린트 2)
 
 - 파일: `src/views/GameSelectView.vue`
-- 와이어프레임: `../wireframes/game-select.png`, `../wireframes/game-select-tablet.png` (아직 없음)
+- 와이어프레임: `../wireframes/game-select.png` (아직 없음)
 - 종류: 조작 화면 (일반 웹 화면, 방송에 송출하지 않음)
 - 헤더, 푸터: `common-frame.md` 공통 프레임 사용
 - 이 화면에 있을 때 표출 화면(OBS)에는 대기 화면이 나감 (별도 문서로 정리 예정)
