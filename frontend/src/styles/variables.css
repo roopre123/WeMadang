@@ -73,7 +73,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --color-background: #141418;
     --color-surface: #1E1E24;
     --color-text: #F7F7FA;
@@ -95,4 +95,28 @@
     --color-signal-on: #F0954A;
     --color-on-signal: #1F1F24;
   }
+}
+
+/* 미리보기에서 라이트/다크를 강제로 전환할 때 사용 (data-theme="dark") */
+:root[data-theme="dark"] {
+  --color-background: #141418;
+  --color-surface: #1E1E24;
+  --color-text: #F7F7FA;
+  --color-text-sub: #B8B8C2;
+  --color-border: #2E2E36;
+  --color-primary: #B2FFE9;
+  --color-on-primary: #1F1F24;
+  --color-primary-border: transparent;
+  --color-accent: #00FFA3;
+  --color-blue-bg: #1C3F6E;
+  --color-blue-text: #BFDAFF;
+  --color-red-bg: #6A2226;
+  --color-red-text: #FFC2C2;
+  --color-success: #5CD18B;
+  --color-error: #FF7A72;
+  --color-toast-bg: #F7F7FA;
+  --color-toast-text: #141418;
+  --color-signal-wait: #2E2E36;
+  --color-signal-on: #F0954A;
+  --color-on-signal: #1F1F24;
 }
