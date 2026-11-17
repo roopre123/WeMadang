@@ -21,9 +21,9 @@ withDefaults(defineProps<{
   playCount?: number
   viewerCount?: number
 }>(), {
-  visitCount: 23456789,
-  playCount: 3456789,
-  viewerCount: 123456789,
+  visitCount: 0,
+  playCount: 0,
+  viewerCount: 0,
 })
 
 const emit = defineEmits<{

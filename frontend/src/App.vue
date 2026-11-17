@@ -7,17 +7,11 @@ import AppToast from '@/components/AppToast.vue'
 
 const route = useRoute()
 
-// 숫자/문자열(앞자리 0 포함)을 숫자로 바꾼다. 숫자가 아니면 0
-const toCount = (v: number | string) => {
-  const n = Number(v)
-  return Number.isFinite(n) ? n : 0
-}
-
-// 임시 값: API 연결 전이라 로그인 전 상태와 카운트 임시 숫자로 고정. 연결 시 실제 값으로 교체
+// 임시 값: API 연결 전이라 로그인 전 상태와 카운트 0으로 고정. 연결 시 실제 값으로 교체
 const loggedIn = false
-const visitCount = toCount('0234567890')
-const playCount = toCount('034567890')
-const viewerCount = toCount(123456789)
+const visitCount = 0
+const playCount = 0
+const viewerCount = 0
 
 // 임시 값: 토스트는 아직 띄울 일이 없어 숨김. 연결 시 실제 메시지로 교체
 const toastVisible = ref(false)
