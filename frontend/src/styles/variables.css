@@ -1,0 +1,98 @@
+/* ===================================
+   CSS 변수: 색, 글꼴, 간격, 둥글기
+   design-rules.md 기준 — 라이트 / 다크 두 벌
+=================================== */
+
+:root {
+  /* 색 — 라이트 */
+  --color-background: #FFFFFF;
+  --color-surface: #EFEFF2;
+  --color-text: #1F1F24;
+  --color-text-sub: #55555F;
+  --color-border: #E3E3E8;
+  --color-primary: #B2FFE9;
+  --color-on-primary: #1F1F24;
+  --color-primary-border: #9DEAD3;
+  --color-accent: #00A86B;
+  --color-blue-bg: #A9CBF5;
+  --color-blue-text: #0C3A6E;
+  --color-red-bg: #F2A7A7;
+  --color-red-text: #7A1F1F;
+  --color-success: #2E9E5B;
+  --color-error: #D9473F;
+  --color-toast-bg: #1F1F24;
+  --color-toast-text: #FFFFFF;
+  --color-signal-wait: #D6D6D6;
+  --color-signal-on: #F0954A;
+  --color-on-signal: #1F1F24;
+
+  /* 그라데이션 (라이트·다크 동일) */
+  --gradient-bridge: linear-gradient(90deg, #FF7EB6 0%, #7EC8FF 50%, #B5E655 100%);
+
+  /* 글꼴 */
+  --font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --line-height-body: 1.6;
+  --line-height-heading: 1.3;
+
+  /* 글자 크기 (조작 화면) */
+  --font-size-heading-xl: 40px;
+  --font-size-heading: 28px;
+  --font-size-subheading: 20px;
+  --font-size-body: 16px;
+  --font-size-small: 14px;
+
+  /* 간격 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+
+  /* 모서리 */
+  --radius-btn: 8px;
+  --radius-card: 12px;
+  --radius-bubble: 16px;
+
+  /* 버튼 크기 */
+  --btn-height-lg: 48px;
+  --btn-height-md: 40px;
+  --btn-height-sm: 32px;
+  --btn-px-lg: 24px;
+  --btn-px-md: 20px;
+  --btn-px-sm: 12px;
+  --btn-font-lg: 16px;
+  --btn-font-md: 15px;
+  --btn-font-sm: 13px;
+
+  /* 헤더 높이 */
+  --header-height: 64px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #141418;
+    --color-surface: #1E1E24;
+    --color-text: #F7F7FA;
+    --color-text-sub: #B8B8C2;
+    --color-border: #2E2E36;
+    --color-primary: #B2FFE9;
+    --color-on-primary: #1F1F24;
+    --color-primary-border: transparent;
+    --color-accent: #00FFA3;
+    --color-blue-bg: #1C3F6E;
+    --color-blue-text: #BFDAFF;
+    --color-red-bg: #6A2226;
+    --color-red-text: #FFC2C2;
+    --color-success: #5CD18B;
+    --color-error: #FF7A72;
+    --color-toast-bg: #F7F7FA;
+    --color-toast-text: #141418;
+    --color-signal-wait: #2E2E36;
+    --color-signal-on: #F0954A;
+    --color-on-signal: #1F1F24;
+  }
+}

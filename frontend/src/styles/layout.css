@@ -1,0 +1,74 @@
+/* ===================================
+   화면 배치 클래스
+   미디어 쿼리 기준 너비: 1280px, 768px
+=================================== */
+
+/* ---- 앱 전체 구조 ---- */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 헤더(64px) 높이만큼 본문을 아래로 밀기 */
+.app-main {
+  flex: 1;
+  padding-top: var(--header-height);
+}
+
+/* ---- 콘텐츠 최대 너비 ---- */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* ---- Flex 유틸 ---- */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+.center-x {
+  display: flex;
+  justify-content: center;
+}
+
+.center-y {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 간격 유틸 */
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+
+/* ---- 반응형: 1280px 미만 (2단 → 1단) ---- */
+@media (max-width: 1279px) {
+  .col-2 {
+    flex-direction: column;
+  }
+
+  .card-row {
+    flex-direction: column;
+  }
+
+}
+
+/* ---- 반응형: 768px 미만 (최소 너비 고정) ---- */
+@media (max-width: 767px) {
+  body {
+    overflow-x: auto;
+  }
+}

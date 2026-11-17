@@ -1,0 +1,152 @@
+/* ===================================
+   버튼, 카드, 입력란, 팀 색, 텍스트 헬퍼
+   여러 화면에서 반복되는 공통 클래스
+=================================== */
+
+/* ---- 버튼 기본 ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+  border: none;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 버튼 크기 */
+.btn-lg {
+  height: var(--btn-height-lg);
+  padding: 0 var(--btn-px-lg);
+  font-size: var(--btn-font-lg);
+}
+
+.btn-md {
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-px-md);
+  font-size: var(--btn-font-md);
+}
+
+.btn-sm {
+  height: var(--btn-height-sm);
+  padding: 0 var(--btn-px-sm);
+  font-size: var(--btn-font-sm);
+}
+
+/* 주요 버튼 (포인트 민트 배경) */
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: 1px solid var(--color-primary-border);
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(0.93);
+}
+
+/* 보조 버튼 */
+.btn-secondary {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+/* 위험 버튼 */
+.btn-danger {
+  background: transparent;
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+}
+
+.btn-danger:hover:not(:disabled) {
+  filter: brightness(0.9);
+}
+
+/* ---- 카드 ---- */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  padding: var(--space-4);
+}
+
+/* ---- 입력란 ---- */
+.input {
+  display: block;
+  width: 100%;
+  height: var(--btn-height-md);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+/* ---- 팀 색 ---- */
+.team-blue {
+  background: var(--color-blue-bg);
+  color: var(--color-blue-text);
+}
+
+.team-red {
+  background: var(--color-red-bg);
+  color: var(--color-red-text);
+}
+
+/* ---- 글자 크기 헬퍼 ---- */
+.text-heading-xl {
+  font-size: var(--font-size-heading-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+}
+
+.text-heading {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+}
+
+.text-subheading {
+  font-size: var(--font-size-subheading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+}
+
+.text-body {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.text-small {
+  font-size: var(--font-size-small);
+  color: var(--color-text-sub);
+  line-height: var(--line-height-body);
+}
+
