@@ -18,15 +18,30 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	dependencies {
+		// CVE-2026-110879 임시 고정. 스프링 부트 올릴 때 지우기
+		dependency 'com.fasterxml.jackson.core:jackson-databind:2.21.8'
+		dependency 'tools.jackson.core:jackson-databind:3.1.8'
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0'
 	compileOnly 'org.projectlombok:lombok'
+
 	annotationProcessor 'org.projectlombok:lombok'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-websocket-test'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
