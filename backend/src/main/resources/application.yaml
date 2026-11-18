@@ -1,3 +1,19 @@
 spring:
   application:
     name: wemadang
+
+chzzk:
+  client-id: ${CHZZK_CLIENT_ID}
+  client-secret: ${CHZZK_CLIENT_SECRET}
+  redirection-url: ${CHZZK_REDIRECTION_URL}
+
+  login-url: https://chzzk.naver.com/account-interlock
+
+app:
+  front-url: http://localhost:5173
+
+server:
+  servlet:
+    context-path: /api
+    session:
+      timeout: 12h
