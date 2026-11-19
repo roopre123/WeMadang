@@ -19,7 +19,16 @@ export const useAuthStore = defineStore('auth', () =>{
   }
 
   // 로그아웃
-  function logout() {
+  async function logout(): Promise<boolean> {
+    try{
+      const res = await fetch('/api/auth/logout', { method: 'POST' })
+      if(!res.ok) return false
+    } catch {
+      return false
+    }
+    loggedIn.value = false
+    channelName.value = ''
+    return true
   }
 
   return {

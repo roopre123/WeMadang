@@ -45,6 +45,12 @@ function onLoginQueryChange(v: unknown) {
 }
 
 watch(getLoginQuery, onLoginQueryChange, { immediate: true })
+
+async function onLogout() {
+  const ok = await auth.logout()
+  if (ok) showToast('로그아웃했어요.', 'success')
+  else showToast('로그아웃에 실패했어요.', 'error')
+}
 </script>
 
 <template>
@@ -56,7 +62,7 @@ watch(getLoginQuery, onLoginQueryChange, { immediate: true })
       :logged-in="auth.loggedIn"
       :nickname="auth.channelName"
       @login="auth.login"
-      @logout="auth.logout"
+      @logout="onLogout"
     />
 
     <main class="app-main">

@@ -105,4 +105,11 @@ public class AuthController {
                 ? Map.of("loggedIn", false)
                 : Map.of("loggedIn", true, "channelName", name);
     }
+
+    // 사용자 로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.noContent().build();
+    }
 }
