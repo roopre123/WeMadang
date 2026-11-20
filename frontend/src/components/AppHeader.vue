@@ -17,6 +17,8 @@
     navigate(menu)      — 메뉴 클릭 (메뉴 이름 전달)
 -->
 <script setup lang="ts">
+import { IconBell, IconBellOff } from '@tabler/icons-vue'
+
 withDefaults(defineProps<{
   loggedIn?: boolean
   nickname?: string
@@ -72,19 +74,8 @@ const menus = ['게임 목록', '커뮤니티']
           :aria-label="soundOn ? '알림 끄기' : '알림 켜기'"
           @click="emit('toggle-sound')"
         >
-          <!-- 알림 켜짐 (Feather bell) -->
-          <svg v-if="soundOn" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-          </svg>
-          <!-- 알림 꺼짐 (Feather bell-off) -->
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            <path d="M18.63 13A17.89 17.89 0 0 1 18 8"/>
-            <path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/>
-            <path d="M18 8a6 6 0 0 0-9.33-5"/>
-            <line x1="1" y1="1" x2="23" y2="23"/>
-          </svg>
+          <IconBell v-if="soundOn" size="20" stroke="2" />
+          <IconBellOff v-else size="20" stroke="2" />
         </button>
 
         <button class="btn btn-secondary btn-sm" @click="emit('login')">로그인</button>
@@ -104,17 +95,8 @@ const menus = ['게임 목록', '커뮤니티']
           :aria-label="soundOn ? '알림 끄기' : '알림 켜기'"
           @click="emit('toggle-sound')"
         >
-          <svg v-if="soundOn" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-          </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            <path d="M18.63 13A17.89 17.89 0 0 1 18 8"/>
-            <path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/>
-            <path d="M18 8a6 6 0 0 0-9.33-5"/>
-            <line x1="1" y1="1" x2="23" y2="23"/>
-          </svg>
+          <IconBell v-if="soundOn" size="20" stroke="2" />
+          <IconBellOff v-else size="20" stroke="2" />
         </button>
 
         <span class="nickname text-small">{{ nickname }}님 안녕하세요.</span>

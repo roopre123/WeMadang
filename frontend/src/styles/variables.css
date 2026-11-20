@@ -26,6 +26,23 @@
   --color-signal-on: #F0954A;
   --color-on-signal: #1F1F24;
 
+  /* 게임 아이콘 색 (design-rules.md "게임 아이콘") */
+  --icon-purple-bg: #EEEDFE;
+  --icon-purple-fg: #3C3489;
+  --icon-amber-bg: #FAEEDA;
+  --icon-amber-fg: #633806;
+  --icon-teal-bg: #E1F5EE;
+  --icon-teal-fg: #085041;
+  --icon-pink-bg: #FBEAF0;
+  --icon-pink-fg: #72243E;
+  --icon-green-bg: #EAF3DE;
+  --icon-green-fg: #27500A;
+  --icon-gray-bg: #F1EFE8;
+  --icon-gray-fg: #444441;
+
+  /* 송출 미리보기 빈 상자 (라이트·다크 동일) */
+  --color-preview-bg: #000000;
+
   /* 그라데이션 (라이트·다크 동일) */
   --gradient-bridge: linear-gradient(90deg, #FF7EB6 0%, #7EC8FF 50%, #B5E655 100%);
 
@@ -70,6 +87,26 @@
 
   /* 헤더 높이 */
   --header-height: 64px;
+
+  /* 레이아웃 크기 (screens/game-select.md, broadcast-panel.md) */
+  --container-width: 1200px;
+  --panel-main-width: 568px;
+  --panel-width: 608px;
+  --preview-width: 576px;
+  --preview-height: 324px;
+  --quick-menu-width: 72px;
+  --search-width: 280px;
+  --card-min-height: 200px;
+
+  /* 문서에 정해진 간격 (간격 단계 4/8/16/24/32/48/64 밖의 값) */
+  --space-panel: 12px;
+  --space-pill-x: 10px;
+  --radius-pill: 999px;
+
+  /* 게임 아이콘 상자 크기 (design-rules.md "게임 아이콘") */
+  --game-icon-card: 40px;
+  --game-icon-tile: 72px;
+  --game-icon-hero: 96px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -94,6 +131,20 @@
     --color-signal-wait: #2E2E36;
     --color-signal-on: #F0954A;
     --color-on-signal: #1F1F24;
+
+    /* 게임 아이콘 색 (design-rules.md "게임 아이콘") */
+    --icon-purple-bg: #3C3489;
+    --icon-purple-fg: #CECBF6;
+    --icon-amber-bg: #633806;
+    --icon-amber-fg: #FAC775;
+    --icon-teal-bg: #085041;
+    --icon-teal-fg: #9FE1CB;
+    --icon-pink-bg: #72243E;
+    --icon-pink-fg: #F4C0D1;
+    --icon-green-bg: #27500A;
+    --icon-green-fg: #C0DD97;
+    --icon-gray-bg: #444441;
+    --icon-gray-fg: #D3D1C7;
   }
 }
 
@@ -119,4 +170,18 @@
   --color-signal-wait: #2E2E36;
   --color-signal-on: #F0954A;
   --color-on-signal: #1F1F24;
+
+  /* 게임 아이콘 색 (design-rules.md "게임 아이콘") */
+  --icon-purple-bg: #3C3489;
+  --icon-purple-fg: #CECBF6;
+  --icon-amber-bg: #633806;
+  --icon-amber-fg: #FAC775;
+  --icon-teal-bg: #085041;
+  --icon-teal-fg: #9FE1CB;
+  --icon-pink-bg: #72243E;
+  --icon-pink-fg: #F4C0D1;
+  --icon-green-bg: #27500A;
+  --icon-green-fg: #C0DD97;
+  --icon-gray-bg: #444441;
+  --icon-gray-fg: #D3D1C7;
 }

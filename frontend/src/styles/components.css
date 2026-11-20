@@ -81,6 +81,45 @@
   filter: brightness(0.9);
 }
 
+/* ---- 선택 표시 버튼 (design-rules.md "선택 표시") ----
+   .btn .btn-sm 과 같이 사용. 선택되면 .selected */
+.btn-option {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-sub);
+}
+
+.btn-option:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+.btn-option.selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary-border);
+  color: var(--color-on-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ---- 게임 아이콘 상자 (조작 화면 카드, 송출 화면 타일, 첫 화면 공통) ---- */
+.game-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 20%;
+}
+
+.game-icon-card { width: var(--game-icon-card); height: var(--game-icon-card); }
+.game-icon-tile { width: var(--game-icon-tile); height: var(--game-icon-tile); }
+.game-icon-hero { width: var(--game-icon-hero); height: var(--game-icon-hero); }
+
+.game-icon-purple { background: var(--icon-purple-bg); color: var(--icon-purple-fg); }
+.game-icon-amber { background: var(--icon-amber-bg); color: var(--icon-amber-fg); }
+.game-icon-teal { background: var(--icon-teal-bg); color: var(--icon-teal-fg); }
+.game-icon-pink { background: var(--icon-pink-bg); color: var(--icon-pink-fg); }
+.game-icon-green { background: var(--icon-green-bg); color: var(--icon-green-fg); }
+.game-icon-gray { background: var(--icon-gray-bg); color: var(--icon-gray-fg); }
+
 /* ---- 카드 ---- */
 .card {
   background: var(--color-surface);

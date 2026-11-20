@@ -19,9 +19,54 @@
 /* ---- 콘텐츠 최대 너비 ---- */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: calc(var(--container-width) + var(--space-4) * 2);
   margin: 0 auto;
   padding: 0 var(--space-4);
+}
+
+/* ---- 본문 + 방송 패널 (왼쪽 568 / 간격 24 / 오른쪽 608) ---- */
+.panel-layout {
+  display: grid;
+  grid-template-columns: var(--panel-main-width) var(--panel-width);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* 스크롤해도 헤더 아래 24 지점에 붙어서 따라옴 (푸터에 닿으면 멈춤) */
+.panel-sticky {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-4));
+}
+
+/* ---- 방송 패널 접힘: 퀵메뉴 버튼 ----
+   부모(화면)가 position: relative 이고 화면 폭 전체를 차지해야 한다.
+   본문 오른쪽 끝에서 24 띄운 오른쪽 여백에 놓고, 여백이 모자라면(24 + 72 = 96 → 1392 미만) 오른쪽 아래 구석에 띄운다 */
+.broadcast-quick-wrap {
+  position: absolute;
+  top: var(--space-4);
+  bottom: 0;
+  left: calc(50% + var(--container-width) / 2 + var(--space-4));
+  width: var(--quick-menu-width);
+}
+
+.broadcast-quick-wrap .broadcast-quick {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-4));
+}
+
+@media (max-width: 1391px) {
+  .broadcast-quick-wrap {
+    position: fixed;
+    top: auto;
+    bottom: var(--space-4);
+    left: auto;
+    right: var(--space-4);
+    z-index: 50;
+  }
+
+  .broadcast-quick-wrap .broadcast-quick {
+    position: static;
+  }
 }
 
 /* ---- Flex 유틸 ---- */
@@ -62,6 +107,16 @@
 
   .card-row {
     flex-direction: column;
+  }
+
+  /* 방송 패널이 카드 위로 쌓임 (고정 해제) */
+  .panel-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel-layout > .panel-sticky {
+    position: static;
+    order: -1;
   }
 
 }
