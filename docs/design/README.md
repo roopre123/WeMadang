@@ -7,7 +7,11 @@
   - `start.md` : 시작 화면
   - `delay.md` : 딜레이 보정 (조작 화면 모달 + 표출 화면)
   - `game-select.md` : 게임 목록 화면 (스프린트 2)
-- `wireframes/` : 화면별 와이어프레임 이미지 (`screens/`의 파일명과 같은 이름, 데스크톱 한 장)
+  - `broadcast-panel.md` : 방송 패널 (송출용 화면 미리보기, 로그인 후 게임 목록·게임 화면 공통)
+  - `overlay-game-select.md` : 송출 화면 - 게임 목록
+  - `overlay-game-ready.md` : 송출 화면 - 게임 첫 화면 (준비 중)
+- `wireframes/` : 화면별 와이어프레임 이미지 (`screens/`의 파일명과 같은 이름, 데스크톱 한 장. 상태가 여러 개면 `-guest`, `-login`처럼 뒤에 붙임)
+- 와이어프레임은 구성(무엇이 어디에)만 보고, 크기·간격 숫자는 `design-rules.md`와 `screens/` 문서를 따른다
 
 ## 새 화면 추가 순서
 1. 데스크톱 와이어프레임 그리기 (피그마 → PNG 2x로 내보내기)
