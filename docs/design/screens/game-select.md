@@ -67,7 +67,7 @@
 - 카드 높이는 같은 줄끼리 맞춤
 
 ### 페이지 번호
-- 카드 아래 48 띄우고 가운데 (펼침이면 왼쪽 568 영역의 가운데)
+- 카드 아래 48 띄우고 가운데, 페이지 번호 아래도 48 (펼침이면 왼쪽 568 영역의 가운데)
 - `[<<] [<] [1] [2] [3] [4] [5] [>] [>>]`
   - 각 칸 32×32, 사이 8, 작은 버튼 모양
   - 화살표는 아이콘 16 : [<<] `chevrons-left`, [<] `chevron-left`, [>] `chevron-right`, [>>] `chevrons-right`. 숫자는 글자
@@ -81,7 +81,7 @@
 - 카드 자리에 가운데 정렬
   - "찾는 게임이 없어요." (본문 16px)
   - "다른 이름으로 검색해 보세요." (14px, `text-sub`)
-- 높이는 카드 한 줄 높이 이상
+- 최소 높이 200
 
 ## 상태
 - 로그인 전 / 로그인 후 패널 펼침 / 로그인 후 패널 접힘
@@ -95,6 +95,8 @@
 | 분류 버튼 클릭 | `change-category` ('' \| 'quiz' \| 'debate' \| 'interview') |
 | 검색칸에서 Enter | `search` (검색어) |
 | 페이지 번호 클릭 | `change-page` (페이지 번호) |
+| 방송 패널 접기 / 펼치기 | `toggle-panel` |
+| 방송 패널 [복사] | `copy-url` |
 
 - 로그인 안 한 상태에서 [시작하기]를 누르면 로그인으로 보냄 (부모가 처리)
 - 방송 패널의 동작은 `broadcast-panel.md`
@@ -109,6 +111,10 @@
 | totalPages | number | 전체 페이지 수 |
 | loggedIn | boolean | 로그인 여부 (방송 패널 표시) |
 | panelOpen | boolean | 방송 패널 펼침 여부 |
+| overlayUrl | string | 표출 URL (방송 패널로 넘김) |
+| connected | boolean | OBS 연결 여부 (방송 패널로 넘김) |
+
+- 슬롯 `preview` : 방송 패널 미리보기 칸에 넣을 송출 화면
 
 Game : `{ id, name, description, category, screen, icon, color }`
 - category : 'quiz' \| 'debate' \| 'interview' (화면 표시는 퀴즈형 / 토론형 / 면담형)

@@ -38,7 +38,9 @@ import {
 } from '@tabler/icons-vue'
 import BroadcastPanel from '@/components/BroadcastPanel.vue'
 import GameIcon from '@/components/GameIcon.vue'
-import type { Game, GameCategory } from '@/types/game'
+import { categoryLabels, categoryTabs } from '@/types/game'
+import type { Game } from '@/types/game'
+import { pageWindow } from '@/utils/pagination'
 
 const props = withDefaults(defineProps<{
   games?: Game[]
@@ -71,19 +73,6 @@ const emit = defineEmits<{
   'copy-url': []
 }>()
 
-const categories = [
-  { value: '', label: '전체' },
-  { value: 'quiz', label: '퀴즈형' },
-  { value: 'debate', label: '토론형' },
-  { value: 'interview', label: '면담형' },
-]
-
-const categoryLabels: Record<GameCategory, string> = {
-  quiz: '퀴즈형',
-  debate: '토론형',
-  interview: '면담형',
-}
-
 // 검색칸은 Enter를 눌러야 검색하므로 입력 중인 글자는 따로 들고 있고, 부모가 바꾼 검색어만 따라간다
 const searchText = ref(props.keyword)
 watch(() => props.keyword, (value) => { searchText.value = value })
@@ -96,13 +85,7 @@ function onSearchEnter(event: KeyboardEvent) {
 
 const withPanel = computed(() => props.loggedIn && props.panelOpen)
 
-// 번호는 최대 5개, 지금 페이지가 가운데 오게. 없는 페이지는 그리지 않는다
-const pageNumbers = computed(() => {
-  const last = Math.max(props.totalPages, 1)
-  const start = Math.min(Math.max(props.page - 2, 1), Math.max(last - 4, 1))
-  const end = Math.min(start + 4, last)
-  return Array.from({ length: end - start + 1 }, (_, i) => start + i)
-})
+const pageNumbers = computed(() => pageWindow(props.page, props.totalPages))
 
 const isFirstPage = computed(() => props.page <= 1)
 const isLastPage = computed(() => props.page >= props.totalPages)
@@ -121,7 +104,7 @@ const isLastPage = computed(() => props.page >= props.totalPages)
         <div class="select-toolbar">
           <div class="category-buttons">
             <button
-              v-for="item in categories"
+              v-for="item in categoryTabs"
               :key="item.value"
               class="btn btn-sm btn-option"
               :class="{ selected: category === item.value }"

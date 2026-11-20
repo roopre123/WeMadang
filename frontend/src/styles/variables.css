@@ -27,17 +27,17 @@
   --color-on-signal: #1F1F24;
 
   /* 게임 아이콘 색 (design-rules.md "게임 아이콘") */
-  --icon-purple-bg: #EEEDFE;
+  --icon-purple-bg: #CECBF6;
   --icon-purple-fg: #3C3489;
-  --icon-amber-bg: #FAEEDA;
+  --icon-amber-bg: #FAC775;
   --icon-amber-fg: #633806;
-  --icon-teal-bg: #E1F5EE;
+  --icon-teal-bg: #9FE1CB;
   --icon-teal-fg: #085041;
-  --icon-pink-bg: #FBEAF0;
+  --icon-pink-bg: #F4C0D1;
   --icon-pink-fg: #72243E;
-  --icon-green-bg: #EAF3DE;
+  --icon-green-bg: #C0DD97;
   --icon-green-fg: #27500A;
-  --icon-gray-bg: #F1EFE8;
+  --icon-gray-bg: #D3D1C7;
   --icon-gray-fg: #444441;
 
   /* 송출 미리보기 빈 상자 (라이트·다크 동일) */
@@ -107,6 +107,20 @@
   --game-icon-card: 40px;
   --game-icon-tile: 72px;
   --game-icon-hero: 96px;
+
+  /* 표출 화면 (design-rules.md "표출 화면 공통", 글꼴 표의 표출 화면 열) */
+  --overlay-width: 1920px;
+  --overlay-height: 1080px;
+  --overlay-content-left: 360px;
+  --overlay-content-top: 102px;
+  --overlay-content-height: 876px;
+  --overlay-tile-height: 160px;
+  --overlay-cell: 48px;
+  --overlay-logo-size: 56px;
+  --font-size-overlay-hero: 72px;
+  --font-size-overlay-title: 48px;
+  --font-size-overlay-sub: 36px;
+  --font-size-overlay-small: 24px;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -48,6 +48,16 @@ const router = createRouter({
       component: () => import('../preview/GameSelectPreview.vue'),
       meta: { noFrame: true, state: 'empty' },
     },
+    {
+      path: '/preview/overlay-game-select',
+      component: () => import('../preview/OverlayGameSelectPreview.vue'),
+      meta: { noFrame: true },
+    },
+    {
+      path: '/preview/overlay-game-ready',
+      component: () => import('../preview/OverlayGameReadyPreview.vue'),
+      meta: { noFrame: true },
+    },
   ],
 })
 

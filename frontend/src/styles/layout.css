@@ -69,6 +69,44 @@
   }
 }
 
+/* ---- 표출 화면 공통 (1920×1080 고정, 가운데 1200이 내용 영역) ---- */
+.overlay-screen {
+  position: relative;
+  width: var(--overlay-width);
+  height: var(--overlay-height);
+  overflow: hidden;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+.overlay-content {
+  position: absolute;
+  top: var(--overlay-content-top);
+  left: var(--overlay-content-left);
+  width: var(--container-width);
+  height: var(--overlay-content-height);
+}
+
+.overlay-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-heading-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.overlay-guide {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-overlay-small);
+  color: var(--color-text-sub);
+}
+
 /* ---- Flex 유틸 ---- */
 .flex { display: flex; }
 .flex-col { flex-direction: column; }

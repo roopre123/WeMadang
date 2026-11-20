@@ -133,13 +133,16 @@
 - 색 : 아래 6가지 중 하나. games 테이블 `color` 칸에 이름 저장. 파랑·빨강은 팀 색과 헷갈려서 쓰지 않음
   | 이름 | 라이트 배경 / 아이콘 | 다크 배경 / 아이콘 |
   |---|---|---|
-  | purple | #EEEDFE / #3C3489 | #3C3489 / #CECBF6 |
-  | amber | #FAEEDA / #633806 | #633806 / #FAC775 |
-  | teal | #E1F5EE / #085041 | #085041 / #9FE1CB |
-  | pink | #FBEAF0 / #72243E | #72243E / #F4C0D1 |
-  | green | #EAF3DE / #27500A | #27500A / #C0DD97 |
-  | gray | #F1EFE8 / #444441 | #444441 / #D3D1C7 |
+  | purple | #CECBF6 / #3C3489 | #3C3489 / #CECBF6 |
+  | amber | #FAC775 / #633806 | #633806 / #FAC775 |
+  | teal | #9FE1CB / #085041 | #085041 / #9FE1CB |
+  | pink | #F4C0D1 / #72243E | #72243E / #F4C0D1 |
+  | green | #C0DD97 / #27500A | #27500A / #C0DD97 |
+  | gray | #D3D1C7 / #444441 | #444441 / #D3D1C7 |
+  - 라이트 배경은 한 단계 진한 색 (11/21 변경). 연한 색은 회색 카드(`surface`) 위에서 흐려 보였음
   - `variables.css`에 `--icon-{이름}-bg`, `--icon-{이름}-fg` 변수로 넣어서 씀
+- 쓸 수 있는 아이콘 (정해진 목록, `GameIcon.vue`) : `bulb`, `device-gamepad-2`, `flag`, `messages`, `movie`, `music`, `question-mark`, `scale`, `trophy`, `world`
+  - 목록에 없는 이름은 분류 기본 아이콘으로 보임. 새 아이콘을 쓰려면 `GameIcon.vue`에 import와 항목을 같이 추가 (앱이 무거워지지 않게 쓰는 것만 넣음)
 - 아이콘이 없는 게임 : 분류 기본 아이콘 (퀴즈형 `question-mark`, 토론형 `scale`, 면담형 `messages`), 색 gray
 
 ## 선택 표시
