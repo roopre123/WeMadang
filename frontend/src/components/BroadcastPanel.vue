@@ -67,7 +67,7 @@ const statusText = computed(() => (props.connected ? 'OBS 연결됨' : 'OBS 연�
       <button class="btn btn-secondary btn-sm" @click="emit('copy-url')">복사</button>
     </div>
 
-    <p class="text-small">OBS 브라우저 소스에 한 번만 넣으면 돼요.</p>
+    <p class="text-small">로그인할 때마다 주소가 바뀌어요. 방송 전에 OBS 브라우저 소스에 넣어주세요.</p>
   </aside>
 
   <div v-else class="broadcast-quick-wrap">

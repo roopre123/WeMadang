@@ -141,8 +141,10 @@
   | gray | #D3D1C7 / #444441 | #444441 / #D3D1C7 |
   - 라이트 배경은 한 단계 진한 색 (11/21 변경). 연한 색은 회색 카드(`surface`) 위에서 흐려 보였음
   - `variables.css`에 `--icon-{이름}-bg`, `--icon-{이름}-fg` 변수로 넣어서 씀
-- 쓸 수 있는 아이콘 (정해진 목록, `GameIcon.vue`) : `bulb`, `device-gamepad-2`, `flag`, `messages`, `movie`, `music`, `question-mark`, `scale`, `trophy`, `world`
-  - 목록에 없는 이름은 분류 기본 아이콘으로 보임. 새 아이콘을 쓰려면 `GameIcon.vue`에 import와 항목을 같이 추가 (앱이 무거워지지 않게 쓰는 것만 넣음)
+- 쓸 수 있는 아이콘 : **Tabler 아이콘 이름이면 무엇이든** (https://tabler.io/icons 에서 찾은 이름 그대로)
+  - `GameIcon.vue`가 이름으로 그때그때 불러옴 (필요한 것만 불러와서 앱이 무거워지지 않음). 새 퀴즈를 만들어도 소스 수정 없음
+  - 이름이 비었거나 틀리면 분류 기본 아이콘 + gray
+  - 불러오는 동안은 빈 색 상자
 - 아이콘이 없는 게임 : 분류 기본 아이콘 (퀴즈형 `question-mark`, 토론형 `scale`, 면담형 `messages`), 색 gray
 
 ## 선택 표시
