@@ -1,6 +1,8 @@
 spring:
   application:
     name: wemadang
+  profiles:
+    active: local
   config:
     import: optional:file:.env[.properties]
   # optional : 파일이 없어도 에러내지 말고 넘어가라는 뜻
