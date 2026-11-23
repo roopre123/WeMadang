@@ -23,6 +23,41 @@ const router = createRouter({
       component: () => import('../preview/StartFramePreview.vue'),
       meta: { noFrame: true },
     },
+    {
+      path: '/preview/game-select-frame',
+      component: () => import('../preview/GameSelectFramePreview.vue'),
+      meta: { noFrame: true },
+    },
+    {
+      path: '/preview/game-select-guest',
+      component: () => import('../preview/GameSelectPreview.vue'),
+      meta: { noFrame: true, state: 'guest' },
+    },
+    {
+      path: '/preview/game-select-open',
+      component: () => import('../preview/GameSelectPreview.vue'),
+      meta: { noFrame: true, state: 'open' },
+    },
+    {
+      path: '/preview/game-select-closed',
+      component: () => import('../preview/GameSelectPreview.vue'),
+      meta: { noFrame: true, state: 'closed' },
+    },
+    {
+      path: '/preview/game-select-empty',
+      component: () => import('../preview/GameSelectPreview.vue'),
+      meta: { noFrame: true, state: 'empty' },
+    },
+    {
+      path: '/preview/overlay-game-select',
+      component: () => import('../preview/OverlayGameSelectPreview.vue'),
+      meta: { noFrame: true },
+    },
+    {
+      path: '/preview/overlay-game-ready',
+      component: () => import('../preview/OverlayGameReadyPreview.vue'),
+      meta: { noFrame: true },
+    },
   ],
 })
 
