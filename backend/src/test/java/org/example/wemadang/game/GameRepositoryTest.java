@@ -1,5 +1,9 @@
 package org.example.wemadang.game;
 
+import org.example.wemadang.game.domain.Game;
+import org.example.wemadang.game.domain.GameCategory;
+import org.example.wemadang.game.domain.GameColor;
+import org.example.wemadang.game.repository.GameRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

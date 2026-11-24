@@ -1,4 +1,4 @@
-package org.example.wemadang.game;
+package org.example.wemadang.game.domain;
 
 public enum GameColor {
     PURPLE,

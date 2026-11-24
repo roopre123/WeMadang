@@ -1,4 +1,4 @@
-package org.example.wemadang.visit;
+package org.example.wemadang.visit.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
