@@ -5,6 +5,7 @@
   props:
     games: Game[]        — 지금 페이지의 게임 (최대 9개)
     category: string     — 지금 분류 ('' = 전체)
+    sort: string         — 지금 정렬 ('default' | 'popular'). 지금 정렬 하나만 표시
     page: number         — 지금 페이지 (1부터)
     totalPages: number   — 전체 페이지 수
 
@@ -14,23 +15,26 @@
 import { computed } from 'vue'
 import { IconMessageCircle } from '@tabler/icons-vue'
 import GameIcon from '@/components/GameIcon.vue'
-import { categoryLabels, categoryTabs } from '@/types/game'
+import { categoryLabels, categoryTabs, sortTabs } from '@/types/game'
 import type { Game } from '@/types/game'
 import { pageWindow } from '@/utils/pagination'
 
 const props = withDefaults(defineProps<{
   games?: Game[]
   category?: string
+  sort?: string
   page?: number
   totalPages?: number
 }>(), {
   games: () => [],
   category: '',
+  sort: 'default',
   page: 1,
   totalPages: 1,
 })
 
 const pageNumbers = computed(() => pageWindow(props.page, props.totalPages))
+const currentSort = computed(() => sortTabs.find((item) => item.value === props.sort) ?? sortTabs[0]!)
 </script>
 
 <template>
@@ -52,6 +56,7 @@ const pageNumbers = computed(() => pageWindow(props.page, props.totalPages))
         >
           {{ item.label }}
         </span>
+        <span class="overlay-chip overlay-category overlay-sort selected">{{ currentSort.label }}</span>
       </div>
 
       <ul v-if="games.length > 0" class="overlay-tiles">
@@ -120,6 +125,11 @@ const pageNumbers = computed(() => pageWindow(props.page, props.totalPages))
 .overlay-category {
   height: var(--overlay-cell);
   padding: 0 var(--space-4);
+}
+
+/* 지금 정렬 하나: 분류 묶음 바로 오른쪽, 분류 묶음과 사이 32 (칸 사이 gap 16 포함) */
+.overlay-sort {
+  margin-left: calc(var(--space-5) - var(--space-3));
 }
 
 .overlay-tiles {

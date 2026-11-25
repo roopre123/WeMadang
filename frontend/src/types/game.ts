@@ -22,3 +22,8 @@ export const categoryTabs = [
   { value: 'debate', label: categoryLabels.debate },
   { value: 'interview', label: categoryLabels.interview },
 ]
+
+export const sortTabs = [
+  { value: 'default', label: '기본순' },
+  { value: 'popular', label: '인기순' },
+]

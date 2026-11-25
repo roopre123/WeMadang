@@ -5,6 +5,7 @@
   props:
     games: Game[]          — 지금 페이지의 게임 (최대 9개)
     category: string       — 지금 분류 ('' = 전체)
+    sort: string           — 지금 정렬 ('default' = 기본순, 'popular' = 인기순)
     keyword: string        — 지금 검색어
     page: number           — 지금 페이지 (1부터)
     totalPages: number     — 전체 페이지 수
@@ -19,6 +20,7 @@
   emits:
     select-game(id)        — [시작하기] 클릭 (로그인 안 했으면 부모가 로그인으로 보냄)
     change-category(value) — 분류 버튼 클릭 ('' | 'quiz' | 'debate' | 'interview')
+    change-sort(value)     — 정렬 버튼 클릭 ('default' | 'popular')
     search(keyword)        — 검색칸에서 Enter
     change-page(page)      — 페이지 번호 클릭
     toggle-panel           — (방송 패널) 접기 / 펼치기
@@ -38,13 +40,14 @@ import {
 } from '@tabler/icons-vue'
 import BroadcastPanel from '@/components/BroadcastPanel.vue'
 import GameIcon from '@/components/GameIcon.vue'
-import { categoryLabels, categoryTabs } from '@/types/game'
+import { categoryLabels, categoryTabs, sortTabs } from '@/types/game'
 import type { Game } from '@/types/game'
 import { pageWindow } from '@/utils/pagination'
 
 const props = withDefaults(defineProps<{
   games?: Game[]
   category?: string
+  sort?: string
   keyword?: string
   page?: number
   totalPages?: number
@@ -55,6 +58,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   games: () => [],
   category: '',
+  sort: 'default',
   keyword: '',
   page: 1,
   totalPages: 1,
@@ -67,6 +71,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   'select-game': [id: number]
   'change-category': [category: string]
+  'change-sort': [sort: string]
   search: [keyword: string]
   'change-page': [page: number]
   'toggle-panel': []
@@ -102,16 +107,31 @@ const isLastPage = computed(() => props.page >= props.totalPages)
         </div>
 
         <div class="select-toolbar">
-          <div class="category-buttons">
-            <button
-              v-for="item in categoryTabs"
-              :key="item.value"
-              class="btn btn-sm btn-option"
-              :class="{ selected: category === item.value }"
-              @click="emit('change-category', item.value)"
-            >
-              {{ item.label }}
-            </button>
+          <div class="filter-buttons">
+            <div class="category-buttons">
+              <button
+                v-for="item in categoryTabs"
+                :key="item.value"
+                class="btn btn-sm btn-option"
+                :class="{ selected: category === item.value }"
+                @click="emit('change-category', item.value)"
+              >
+                {{ item.label }}
+              </button>
+            </div>
+
+            <div class="sort-buttons" role="group" aria-label="정렬">
+              <button
+                v-for="item in sortTabs"
+                :key="item.value"
+                class="btn btn-sm btn-option"
+                :class="{ selected: sort === item.value }"
+                :aria-pressed="sort === item.value"
+                @click="emit('change-sort', item.value)"
+              >
+                {{ item.label }}
+              </button>
+            </div>
           </div>
 
           <label class="search-box">
@@ -198,6 +218,36 @@ const isLastPage = computed(() => props.page >= props.totalPages)
 .game-select {
   position: relative;
   padding: var(--space-6) 0;
+}
+
+/* 분류 + 정렬 (정렬은 분류 묶음과 사이 32) */
+.filter-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* 정렬: 두 칸이 붙은 버튼 묶음 */
+.sort-buttons {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.sort-buttons .btn {
+  border-radius: 0;
+}
+
+.sort-buttons .btn:first-child {
+  border-radius: var(--radius-btn) 0 0 var(--radius-btn);
+}
+
+.sort-buttons .btn:last-child {
+  margin-left: -1px;
+  border-radius: 0 var(--radius-btn) var(--radius-btn) 0;
+}
+
+.sort-buttons .btn.selected {
+  position: relative;
 }
 
 .select-guide {
@@ -328,6 +378,19 @@ const isLastPage = computed(() => props.page >= props.totalPages)
 .page-btn {
   width: var(--btn-height-sm);
   padding: 0;
+}
+
+/* 패널 펼침(왼쪽 568): 첫 줄 분류 + 정렬, 둘째 줄 검색칸 (폭 전체), 두 줄 사이 16 */
+@media (min-width: 1280px) {
+  .panel-layout .select-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .panel-layout .search-box {
+    width: auto;
+  }
 }
 
 @media (max-width: 1279px) {
