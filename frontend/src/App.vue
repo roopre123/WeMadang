@@ -51,6 +51,12 @@ async function onLogout() {
   if (ok) showToast('로그아웃했어요.', 'success')
   else showToast('로그아웃에 실패했어요.', 'error')
 }
+
+function onNavigate(menu: string) {
+  if (menu === '홈') router.push('/')
+  if (menu === '게임 목록') router.push('/games')
+  // if (menu === '커뮤니티') "";
+}
 </script>
 
 <template>
@@ -61,8 +67,10 @@ async function onLogout() {
     <AppHeader
       :logged-in="auth.loggedIn"
       :nickname="auth.channelName"
+      :active-menu="route.path === '/games' ? '게임 목록' : ''"
       @login="auth.login"
       @logout="onLogout"
+      @navigate="onNavigate"
     />
 
     <main class="app-main">
@@ -73,6 +81,7 @@ async function onLogout() {
           :play-count="playCount"
           :viewer-count="viewerCount"
           @login="auth.login"
+          @show-games="router.push('/games')"
         />
       </RouterView>
     </main>

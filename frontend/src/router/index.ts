@@ -9,6 +9,10 @@ const router = createRouter({
       component: () => import('../views/StartView.vue'),
     },
     {
+      path: '/games',
+      component: () => import('../views/GameListPage.vue'),
+    },
+    {
       path: '/preview/common-frame',
       component: () => import('../preview/CommonFramePreview.vue'),
       meta: { noFrame: true },
