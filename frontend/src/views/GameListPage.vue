@@ -3,6 +3,12 @@ import { ref, onMounted } from 'vue'
 import GameSelectView from '@/views/GameSelectView.vue'
 import { fetchGames } from '@/api/games'
 import type { Game } from '@/types/game'
+import OverlayGameSelect from '@/components/overlay/OverlayGameSelect.vue'
+import OverlayPreviewBox from '@/components/overlay/OverlayPreviewBox.vue'
+import { useAuthStore } from '@/stores/auth'
+
+const auth = useAuthStore()
+const panelOpen = ref(true)
 
 const category = ref('')
 const sort = ref('default')
@@ -59,9 +65,24 @@ function onChangePage(value: number) {
     :keyword="keyword"
     :page="page"
     :total-pages="totalPages"
+    :logged-in="auth.loggedIn"
     @change-category="onChangeCategory"
     @change-sort="onChangeSort"
     @search="onSearch"
     @change-page="onChangePage"
-  />
+    :panel-open="panelOpen"
+    @toggle-panel="panelOpen = !panelOpen"
+  >
+    <template #preview>
+      <OverlayPreviewBox>
+        <OverlayGameSelect
+          :games="games"
+          :category="category"
+          :sort="sort"
+          :page="page"
+          :total-pages="totalPages"
+        />
+      </OverlayPreviewBox>
+    </template>
+  </GameSelectView>
 </template>
