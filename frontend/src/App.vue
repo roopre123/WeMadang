@@ -4,6 +4,8 @@ import { RouterView, useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import AppToast from '@/components/AppToast.vue'
+import AppModal from '@/components/AppModal.vue'
+import LoginConfirmModal from '@/components/LoginConfirmModal.vue'
 
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
@@ -88,6 +90,7 @@ function onNavigate(menu: string) {
           :visit-count="visitCount"
           :play-count="playCount"
           :viewer-count="viewerCount"
+          :logged-in="auth.loggedIn"
           @login="auth.login"
           @show-games="router.push('/games')"
         />
@@ -102,5 +105,15 @@ function onNavigate(menu: string) {
       :type="toastType"
       @hide="toastVisible = false"
     />
+
+    <AppModal
+      :open="auth.loginConfirmOpen"
+      @close="auth.cancelLogin">
+      <LoginConfirmModal
+        @cancel="auth.cancelLogin"
+        @confirm="auth.confirmLogin"
+      />
+    </AppModal>
+
   </div>
 </template>

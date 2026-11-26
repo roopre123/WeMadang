@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 export const useAuthStore = defineStore('auth', () =>{
   const loggedIn = ref(false)
   const channelName = ref('')
+  const loginConfirmOpen = ref(false)
+  let pendingReturnPath = '/'
 
   // 채널명 조회
   async function fetchMe() {
@@ -13,9 +15,21 @@ export const useAuthStore = defineStore('auth', () =>{
     channelName.value = data.channelName ?? ''
   }
 
-  // 로그인
+  // 로그인: 바로 가지 않고 확인 모달을 연다
   function login(returnPath: string = window.location.pathname + window.location.search) {
-    window.location.href = '/api/auth/chzzk/login?returnPath=' + encodeURIComponent(returnPath)
+    pendingReturnPath = returnPath
+    loginConfirmOpen.value = true
+  }
+
+  // 모달 [확인]: 치지직 로그인 이동
+  function confirmLogin() {
+    loginConfirmOpen.value = false
+    window.location.href = '/api/auth/chzzk/login?returnPath=' + encodeURIComponent(pendingReturnPath)
+  }
+
+  // 모달 [취소] / 배경/ x: 닫기만
+  function cancelLogin() {
+    loginConfirmOpen.value = false
   }
 
   // 로그아웃
@@ -36,6 +50,9 @@ export const useAuthStore = defineStore('auth', () =>{
     channelName,
     login,
     logout,
-    fetchMe
+    fetchMe,
+    confirmLogin,
+    cancelLogin,
+    loginConfirmOpen
   }
 })

@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: '/games/:id',
       component: () => import('../views/GamePlayPage.vue'),
-      meta: {requiresAuth: true},
+      meta: {requiresAuth: true, loginFallback: '/games' },
     },
     {
       path: '/preview/common-frame',
@@ -71,13 +71,13 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from) => {
   if( !to.meta.requiresAuth ) return
   const auth = useAuthStore()
   if( !auth.loggedIn ) await auth.fetchMe()
   if( !auth.loggedIn) {
     auth.login(to.fullPath)
-    return false
+    return from.matched.length ? false : ((to.meta.loginFallback as string) ?? '/')
   }
 })
 
