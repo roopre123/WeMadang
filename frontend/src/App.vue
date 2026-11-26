@@ -41,14 +41,22 @@ function getLoginQuery() {
 function onLoginQueryChange(v: unknown) {
   if (v === 'ok') showToast('로그인했어요', 'success')
   if (v === 'fail') showToast('로그인에 실패했어요', 'error')
-  if (v) router.replace({ query: {} })
+  if (v) {
+    // 현재 주소의 ? 를 복사 이후에 login 결과만 지운다. 그걸 다시 주소로 변경한다
+    const query = {...route.query}
+    delete query.login
+    router.replace({query})
+  }
 }
 
 watch(getLoginQuery, onLoginQueryChange, { immediate: true })
 
 async function onLogout() {
   const ok = await auth.logout()
-  if (ok) showToast('로그아웃했어요.', 'success')
+  if (ok) {
+    showToast('로그아웃했어요.', 'success')
+    if (route.meta.requiresAuth) router.replace('/games')
+  }
   else showToast('로그아웃에 실패했어요.', 'error')
 }
 

@@ -14,8 +14,8 @@ export const useAuthStore = defineStore('auth', () =>{
   }
 
   // 로그인
-  function login() {
-    window.location.href = '/api/auth/chzzk/login'
+  function login(returnPath: string = window.location.pathname + window.location.search) {
+    window.location.href = '/api/auth/chzzk/login?returnPath=' + encodeURIComponent(returnPath)
   }
 
   // 로그아웃

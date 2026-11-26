@@ -44,29 +44,32 @@ import { categoryLabels, categoryTabs, sortTabs } from '@/types/game'
 import type { Game } from '@/types/game'
 import { pageWindow } from '@/utils/pagination'
 
-const props = withDefaults(defineProps<{
-  games?: Game[]
-  category?: string
-  sort?: string
-  keyword?: string
-  page?: number
-  totalPages?: number
-  loggedIn?: boolean
-  panelOpen?: boolean
-  overlayUrl?: string
-  connected?: boolean
-}>(), {
-  games: () => [],
-  category: '',
-  sort: 'default',
-  keyword: '',
-  page: 1,
-  totalPages: 1,
-  loggedIn: false,
-  panelOpen: true,
-  overlayUrl: '',
-  connected: false,
-})
+const props = withDefaults(
+  defineProps<{
+    games?: Game[]
+    category?: string
+    sort?: string
+    keyword?: string
+    page?: number
+    totalPages?: number
+    loggedIn?: boolean
+    panelOpen?: boolean
+    overlayUrl?: string
+    connected?: boolean
+  }>(),
+  {
+    games: () => [],
+    category: '',
+    sort: 'default',
+    keyword: '',
+    page: 1,
+    totalPages: 1,
+    loggedIn: false,
+    panelOpen: true,
+    overlayUrl: '',
+    connected: false,
+  },
+)
 
 const emit = defineEmits<{
   'select-game': [id: number]
@@ -80,7 +83,12 @@ const emit = defineEmits<{
 
 // 검색칸은 Enter를 눌러야 검색하므로 입력 중인 글자는 따로 들고 있고, 부모가 바꾼 검색어만 따라간다
 const searchText = ref(props.keyword)
-watch(() => props.keyword, (value) => { searchText.value = value })
+watch(
+  () => props.keyword,
+  (value) => {
+    searchText.value = value
+  },
+)
 
 function onSearchEnter(event: KeyboardEvent) {
   // 한글 입력 중 글자를 확정하는 Enter는 검색으로 치지 않는다
@@ -99,7 +107,6 @@ const isLastPage = computed(() => props.page >= props.totalPages)
 <template>
   <section class="game-select">
     <div class="container game-select-body" :class="{ 'panel-layout': withPanel }">
-
       <div class="game-select-main">
         <div class="select-title">
           <h1 class="text-heading">게임 목록</h1>
@@ -143,7 +150,7 @@ const isLastPage = computed(() => props.page >= props.totalPages)
               placeholder="게임 이름으로 검색"
               aria-label="게임 이름으로 검색"
               @keydown.enter="onSearchEnter"
-            >
+            />
           </label>
         </div>
 
@@ -161,7 +168,9 @@ const isLastPage = computed(() => props.page >= props.totalPages)
               <p class="text-small game-desc">{{ game.description }}</p>
 
               <div class="game-card-foot">
-                <button class="btn btn-secondary btn-sm" @click="emit('select-game', game.id)">시작하기</button>
+                <button class="btn btn-secondary btn-sm" @click="emit('select-game', game.id)">
+                  시작하기
+                </button>
               </div>
             </article>
           </li>
@@ -173,10 +182,20 @@ const isLastPage = computed(() => props.page >= props.totalPages)
         </div>
 
         <nav v-if="totalPages > 1" class="pagination" aria-label="페이지">
-          <button class="btn btn-sm btn-option page-btn" :disabled="isFirstPage" aria-label="맨 앞" @click="emit('change-page', 1)">
+          <button
+            class="btn btn-sm btn-option page-btn"
+            :disabled="isFirstPage"
+            aria-label="맨 앞"
+            @click="emit('change-page', 1)"
+          >
             <IconChevronsLeft size="16" stroke="2" />
           </button>
-          <button class="btn btn-sm btn-option page-btn" :disabled="isFirstPage" aria-label="이전" @click="emit('change-page', page - 1)">
+          <button
+            class="btn btn-sm btn-option page-btn"
+            :disabled="isFirstPage"
+            aria-label="이전"
+            @click="emit('change-page', page - 1)"
+          >
             <IconChevronLeft size="16" stroke="2" />
           </button>
           <button
@@ -189,10 +208,20 @@ const isLastPage = computed(() => props.page >= props.totalPages)
           >
             {{ n }}
           </button>
-          <button class="btn btn-sm btn-option page-btn" :disabled="isLastPage" aria-label="다음" @click="emit('change-page', page + 1)">
+          <button
+            class="btn btn-sm btn-option page-btn"
+            :disabled="isLastPage"
+            aria-label="다음"
+            @click="emit('change-page', page + 1)"
+          >
             <IconChevronRight size="16" stroke="2" />
           </button>
-          <button class="btn btn-sm btn-option page-btn" :disabled="isLastPage" aria-label="맨 뒤" @click="emit('change-page', totalPages)">
+          <button
+            class="btn btn-sm btn-option page-btn"
+            :disabled="isLastPage"
+            aria-label="맨 뒤"
+            @click="emit('change-page', totalPages)"
+          >
             <IconChevronsRight size="16" stroke="2" />
           </button>
         </nav>
@@ -208,7 +237,6 @@ const isLastPage = computed(() => props.page >= props.totalPages)
       >
         <slot name="preview" />
       </BroadcastPanel>
-
     </div>
   </section>
 </template>
