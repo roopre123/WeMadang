@@ -6,6 +6,9 @@ import type { Game } from '@/types/game'
 import OverlayGameSelect from '@/components/overlay/OverlayGameSelect.vue'
 import OverlayPreviewBox from '@/components/overlay/OverlayPreviewBox.vue'
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const auth = useAuthStore()
 const panelOpen = ref(true)
@@ -56,6 +59,10 @@ function onChangePage(value: number) {
   page.value = value
   loadGaems()
 }
+
+function onSelectGame(id: number) {
+  router.push('/games/' + id)
+}
 </script>
 <template>
   <GameSelectView
@@ -70,6 +77,7 @@ function onChangePage(value: number) {
     @change-sort="onChangeSort"
     @search="onSearch"
     @change-page="onChangePage"
+    @select-game="onSelectGame"
     :panel-open="panelOpen"
     @toggle-panel="panelOpen = !panelOpen"
   >

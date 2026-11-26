@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 // meta.noFrame: true → App.vue가 공통 프레임(헤더, 푸터, 토스트)을 씌우지 않는다 (미리보기 전용)
 const router = createRouter({
@@ -11,6 +12,11 @@ const router = createRouter({
     {
       path: '/games',
       component: () => import('../views/GameListPage.vue'),
+    },
+    {
+      path: '/games/:id',
+      component: () => import('../views/GamePlayPage.vue'),
+      meta: {requiresAuth: true},
     },
     {
       path: '/preview/common-frame',
@@ -63,6 +69,16 @@ const router = createRouter({
       meta: { noFrame: true },
     },
   ],
+})
+
+router.beforeEach(async (to) => {
+  if( !to.meta.requiresAuth ) return
+  const auth = useAuthStore()
+  if( !auth.loggedIn ) await auth.fetchMe()
+  if( !auth.loggedIn) {
+    auth.login(to.fullPath)
+    return false
+  }
 })
 
 export default router

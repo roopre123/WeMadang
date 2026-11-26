@@ -35,13 +35,16 @@ public class AuthController {
 
     // 치지직 로그인 화면
     @GetMapping("/chzzk/login")
-    public ResponseEntity<Void> loginPage(HttpSession session) {
+    public ResponseEntity<Void> loginPage(@RequestParam(required = false) String returnPath,
+                                          HttpSession session) {
 
         byte[] bytes = new byte[32];
         new SecureRandom().nextBytes(bytes);
         String state = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
 
         session.setAttribute("chzzkOAuthState", state);
+        session.setAttribute("loginReturnPath", safeReturnPath(returnPath));
+
 
         String url = chzzkClient.buildLoginBuilder(state);
 
@@ -57,6 +60,7 @@ public class AuthController {
                                               HttpSession session,
                                               HttpServletRequest request) {
         String loginState = (String) session.getAttribute("chzzkOAuthState");
+        String returnPath = (String) session.getAttribute("loginReturnPath");
         session.removeAttribute("chzzkOAuthState");
 
         if(code == null || state == null || !state.equals(loginState)) {
@@ -81,7 +85,12 @@ public class AuthController {
             session.setAttribute("refreshToken", token.refreshToken());
             session.setAttribute("tokenExpiresAt", Instant.now().plusSeconds(Long.parseLong(token.expiresIn())));
 
-            return redirectToFront("/?login=ok");
+            // 로그인 할 때 기존 화면 및 파라미터 유지
+            // 기존에 파라미터 있으면 login=ok를 &로 추가하고 없으면 ?로 시작한다.
+            String base = (returnPath == null ? "/" : returnPath);
+            String redirectionPath = base + (base.contains("?") ? "&" : "?") + "login=ok";
+
+            return redirectToFront(redirectionPath);
 
         } catch(ChzzkApiException e ){
             log.warn("치지직 로그인 실패: {}", e.getMessage());
@@ -93,6 +102,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(frontUrl + path))
                 .build();
+    }
+
+    private String safeReturnPath(String path) {
+        if(path == null || !path.startsWith("/")) return "/";
+        return path;
     }
 
     // 사용자 정보 조회 (헤더 사용)
