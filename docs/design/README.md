@@ -6,6 +6,7 @@
   - `common-frame.md` : 헤더, 푸터, 토스트, 모달 (모든 조작 화면 공통)
   - `start.md` : 시작 화면
   - `delay.md` : 딜레이 보정 (조작 화면 모달 + 표출 화면)
+  - `login-confirm.md` : 로그인 확인 모달 (치지직 연동 안내)
   - `game-select.md` : 게임 목록 화면 (스프린트 2)
   - `broadcast-panel.md` : 방송 패널 (송출용 화면 미리보기, 로그인 후 게임 목록·게임 화면 공통)
   - `overlay-game-select.md` : 송출 화면 - 게임 목록
