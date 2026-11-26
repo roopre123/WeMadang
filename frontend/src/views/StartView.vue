@@ -7,6 +7,7 @@
     visitCount: number   — 방문 카운트 (default: 0)
     playCount: number    — 게임 플레이 카운트 (default: 0)
     viewerCount: number  — 참여 시청자 누적 카운트 (default: 0)
+    loggedIn: boolean    — 로그인 여부 (default: false). true면 [치지직으로 로그인]을 숨기고 [게임 둘러보기]만 보여줌
 
   emits:
     login        — [치지직으로 로그인] 클릭
@@ -20,10 +21,12 @@ withDefaults(defineProps<{
   visitCount?: number
   playCount?: number
   viewerCount?: number
+  loggedIn?: boolean
 }>(), {
   visitCount: 0,
   playCount: 0,
   viewerCount: 0,
+  loggedIn: false,
 })
 
 const emit = defineEmits<{
@@ -65,7 +68,7 @@ const features = [
         </p>
 
         <div class="intro-actions">
-          <button class="btn btn-primary btn-lg" @click="emit('login')">치지직으로 로그인</button>
+          <button v-if="!loggedIn" class="btn btn-primary btn-lg" @click="emit('login')">치지직으로 로그인</button>
           <button class="btn btn-secondary btn-lg" @click="emit('show-games')">게임 둘러보기</button>
         </div>
 

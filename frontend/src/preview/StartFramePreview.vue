@@ -1,17 +1,22 @@
 <!--
   StartFramePreview.vue — 시작 화면 미리보기용 내부 페이지 (StartPreview의 iframe 안에서 열림)
-  접속: /preview/start-frame?theme=light|dark&data=basic|large&image=on|off
+  접속: /preview/start-frame?state=guest|login|modal&theme=light|dark&data=basic|large&image=on|off
   공통 프레임(헤더, 푸터)을 직접 그린다 (route meta noFrame).
+  state=modal : 로그인 전 화면 위에 로그인 확인 모달이 열린 상태 (닫기·취소는 모달만 닫는 임시 처리)
 -->
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import AppModal from '@/components/AppModal.vue'
+import LoginConfirmModal from '@/components/LoginConfirmModal.vue'
 import StartView from '@/views/StartView.vue'
 import logo from '@/assets/logo.svg'
 
 const query = useRoute().query
+const loggedIn = query.state === 'login'
+const modalOpen = ref(query.state === 'modal')
 const large = query.data === 'large'
 const hasImage = query.image === 'on'
 
@@ -25,12 +30,13 @@ onMounted(() => {
 
 <template>
   <div class="app-layout">
-    <AppHeader :logged-in="false" active-menu="" />
+    <AppHeader :logged-in="loggedIn" nickname="스트리머"active-menu="" />
     <main class="app-main">
       <StartView
         :visit-count="large ? 23123234 : 0"
         :play-count="large ? 23456789 : 0"
         :viewer-count="large ? 23456789 : 0"
+        :logged-in="loggedIn"
       >
         <template v-if="hasImage" #demo>
           <img :src="logo" alt="토론 화면 예시 이미지 (임시)">
@@ -38,5 +44,9 @@ onMounted(() => {
       </StartView>
     </main>
     <AppFooter />
+
+    <AppModal :open="modalOpen" @close="modalOpen = false">
+      <LoginConfirmModal @cancel="modalOpen = false" @confirm="modalOpen = false" />
+    </AppModal>
   </div>
 </template>
