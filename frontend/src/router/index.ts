@@ -14,7 +14,7 @@ const router = createRouter({
       component: () => import('../views/GameListPage.vue'),
     },
     {
-      path: '/games/:id',
+      path: '/games/:id(\\d+)',
       component: () => import('../views/GamePlayPage.vue'),
       meta: {requiresAuth: true, loginFallback: '/games' },
     },
@@ -88,6 +88,10 @@ const router = createRouter({
       component: () => import('../preview/OverlayGameReadyPreview.vue'),
       meta: { noFrame: true },
     },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('../views/NotFoundPage.vue')
+    }
   ],
 })
 
