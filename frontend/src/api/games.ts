@@ -54,12 +54,26 @@ export async function fetchGames({ category, sort, keyword, page }: SearchParams
 
   const data: ApiGameList = await res.json()
 
-  const games: Game[] = data.games.map((game: ApiGame) => ({
-    ...game,
+  const games: Game[] = data.games.map(toGame)
+
+  return {games, page: data.page, totalPages: data.totalPages}
+}
+
+export async function fetchGame(id: string): Promise<Game | null> {
+  const res = await fetch('/api/games/' + id, { method: 'GET' })
+
+  if (res.status == 404) return null
+  if (!res.ok) throw new Error('게임을 불러오지 못했어요.')
+
+  const data: ApiGame = await res.json()
+
+  return toGame(data)
+}
+
+function toGame(game: ApiGame) :Game{
+  return {...game,
     category: game.category.toLowerCase() as GameCategory,
     color: game.color.toLowerCase(),
     icon: game.icon ?? '',
-  }))
-
-  return {games, page: data.page, totalPages: data.totalPages}
+  }
 }
