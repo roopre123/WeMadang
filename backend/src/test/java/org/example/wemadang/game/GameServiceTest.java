@@ -5,6 +5,7 @@ import org.example.wemadang.game.domain.GameSort;
 import org.example.wemadang.game.dto.GameListResponse;
 import org.example.wemadang.game.dto.GameRequest;
 import org.example.wemadang.game.dto.GameResponse;
+import org.example.wemadang.game.exception.GameNotFoundException;
 import org.example.wemadang.game.repository.GameRepository;
 import org.example.wemadang.game.service.GameService;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ActiveProfiles("local")
@@ -31,6 +33,8 @@ public class GameServiceTest {
 
     @Autowired
     GameService gameService;
+    @Autowired
+    private GameRepository gameRepository;
 
     @Test
     @DisplayName("숨긴 게임은 목록에 안나온다")
@@ -89,5 +93,41 @@ public class GameServiceTest {
 
         assertThat(list.games()).extracting(GameResponse::name).startsWith("테스트 영화 퀴즈 4","테스트 애니 퀴즈 2");
 
+    }
+
+    @Test
+    @DisplayName("있는 게임은 조회가 된ㄷㅏ")
+    void getGame_visible() {
+        Long id = gameRepository.findAll().stream()
+                .filter(game -> game.getName().equals("테스트 토론"))
+                .findFirst()
+                .orElseThrow()
+                .getId();
+
+        GameResponse res = gameService.getGame(id);
+
+        assertThat(res.name()).isEqualTo("테스트 토론");
+        assertThat(res.screen()).isEqualTo("balance-debate");
+    }
+
+    @Test
+    @DisplayName("숨긴 게임은 예외")
+    void unVisible_game() {
+        Long id = gameRepository.findAll().stream()
+                .filter(g -> g.getName().equals("테스트 숨긴 퀴즈"))
+                .findFirst()
+                .orElseThrow()
+                .getId();
+
+        // When + Then: 숨긴 게임을 조회하면 GameNotFoundException이 나야 함
+        //   () -> gameService.getGame(id)
+        //     : 실행할 코드를 상자(람다)에 담아서 넘김. 이 줄에서는 아직 실행 안 됨
+        //   assertThatThrownBy(상자)
+        //     : AssertJ가 try 안에서 상자를 실행하고, 난 예외를 catch해서 보관
+        //     : 예외가 안 나면 "Expecting code to raise a throwable"로 바로 실패
+        //   .isInstanceOf(GameNotFoundException.class)
+        //     : 보관한 예외가 GameNotFoundException인지 확인. 다른 예외면 실패
+        //   감싸지 않고 gameService.getGame(id)를 바로 쓰면 예외가 테스트 밖으로 튀어서 확인도 못 하고 에러로 끝남
+        assertThatThrownBy(() -> gameService.getGame(id)).isInstanceOf(GameNotFoundException.class);
     }
 }

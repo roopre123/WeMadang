@@ -5,13 +5,14 @@ import org.example.wemadang.game.domain.GameSort;
 import org.example.wemadang.game.dto.GameListResponse;
 import org.example.wemadang.game.dto.GameRequest;
 import org.example.wemadang.game.dto.GameResponse;
+import org.example.wemadang.game.exception.GameNotFoundException;
 import org.example.wemadang.game.repository.GameRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -31,5 +32,15 @@ public class GameService {
                 games.stream().map(GameResponse::from).toList(),
                 request.page(),
                 games.getTotalPages());
+    }
+
+    public GameResponse getGame(Long id) {
+        Optional<Game> game = gameRepository.findByIdAndVisibleTrue(id);
+
+        if(game.isEmpty()){
+            throw new GameNotFoundException(id);
+        }
+
+        return GameResponse.from(game.get());
     }
 }

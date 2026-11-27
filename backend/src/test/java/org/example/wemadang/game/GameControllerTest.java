@@ -5,6 +5,7 @@ import org.example.wemadang.game.domain.GameCategory;
 import org.example.wemadang.game.domain.GameSort;
 import org.example.wemadang.game.dto.GameListResponse;
 import org.example.wemadang.game.dto.GameRequest;
+import org.example.wemadang.game.exception.GameNotFoundException;
 import org.example.wemadang.game.service.GameService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,5 +54,12 @@ public class GameControllerTest {
 
         // Then: 서비스가 이 값으로 불렸는지 (검색어 공백 지워졌는지)
         verify(gameService).getGameList(new GameRequest(GameCategory.QUIZ, GameSort.POPULAR, "롤", 2));
+    }
+
+    @Test
+    @DisplayName("없는 게임 호출")
+    void NotExistGame() {
+        // given
+        given(gameService.getGame(999L)).willThrow(new GameNotFoundException(999L));
     }
 }

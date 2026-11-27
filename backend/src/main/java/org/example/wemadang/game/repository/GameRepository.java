@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
 
@@ -53,4 +54,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Page<Game> findVisibleGamesByPopular(@Param("category") GameCategory category,
                                          @Param("keyword") String keyword,
                                          Pageable pageable);
+
+    Optional<Game> findByIdAndVisibleTrue(Long id);
 }
