@@ -1,10 +1,10 @@
 <!--
   GamePlayFramePreview.vue — 게임 화면 미리보기용 내부 페이지 (GamePlayPreview의 iframe 안에서 열림)
-  접속: /preview/game-play-frame?game=normal|loading|long|noicon&screen=debate|interview&obs=on|off&theme=light|dark
+  접속: /preview/game-play-frame?game=normal|loading|long|noicon&screen=debate|interview&obs=on|off&wide=on|off&theme=light|dark
   공통 프레임(헤더, 푸터)을 직접 그린다 (route meta noFrame).
 -->
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
@@ -24,6 +24,7 @@ const games: Record<string, Game> = {
 }
 const key = String(query.game ?? 'normal')
 const game: Game | null = key === 'loading' ? null : (games[key] ?? games.normal!)
+const wide = ref(query.wide === 'on')
 const screenIsInterview = query.screen === 'interview'
 
 onMounted(() => {
@@ -36,24 +37,26 @@ onMounted(() => {
 
 <template>
   <div class="app-layout">
-    <AppHeader :logged-in="true" nickname="스트리머" active-menu="게임 목록" />
+    <AppHeader :wide="wide" :logged-in="true" nickname="스트리머" active-menu="게임 목록" />
     <main class="app-main">
       <GamePlayView
         :game="game"
         overlay-url="https://wemadang.example.com/overlay/xxxxxxxxxxxx"
         :connected="query.obs !== 'off'"
+        :wide="wide"
+        @toggle-wide="wide = !wide"
       >
         <template v-if="game">
           <InterviewScreen v-if="screenIsInterview" />
           <BalanceDebateScreen v-else />
         </template>
         <template v-if="game" #preview>
-          <OverlayPreviewBox>
+          <OverlayPreviewBox :wide="wide">
             <OverlayGameReady :game="game" />
           </OverlayPreviewBox>
         </template>
       </GamePlayView>
     </main>
-    <AppFooter />
+    <AppFooter :wide="wide" />
   </div>
 </template>

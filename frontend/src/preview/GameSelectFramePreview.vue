@@ -1,6 +1,6 @@
 <!--
   GameSelectFramePreview.vue — 게임 목록 화면 미리보기용 내부 페이지 (GameSelectPreview의 iframe 안에서 열림)
-  접속: /preview/game-select-frame?state=guest|open|closed|empty&theme=light|dark&data=basic|one|many&obs=on|off&url=short|long
+  접속: /preview/game-select-frame?state=guest|open|closed|empty&theme=light|dark&data=basic|one|many&obs=on|off&url=short|long&wide=on|off
   공통 프레임(헤더, 푸터)을 직접 그린다 (route meta noFrame).
   가짜 데이터와, 분류·정렬·검색·페이지·패널 접기를 눌러 볼 수 있게 하는 임시 처리만 여기에 있다 (실제 동작은 개발자가 연결).
 -->
@@ -28,6 +28,7 @@ const sort = ref('default')
 const keyword = ref(state === 'empty' ? '없는 게임 이름' : '')
 const page = ref(1)
 const panelOpen = ref(state !== 'closed')
+const wide = ref(query.wide === 'on')
 
 // 인기순용 가짜 플레이 수 (같으면 정해 둔 순서)
 const plays = (id: number) => (id * 7) % 13
@@ -71,6 +72,7 @@ onMounted(() => {
 <template>
   <div class="app-layout">
     <AppHeader
+      :wide="wide && state !== 'guest' && panelOpen"
       :logged-in="state !== 'guest'"
       nickname="스트리머"
       active-menu="게임 목록"
@@ -87,19 +89,21 @@ onMounted(() => {
         :panel-open="panelOpen"
         :overlay-url="overlayUrl"
         :connected="query.obs !== 'off'"
+        :wide="wide"
         @change-category="onChangeCategory"
         @change-sort="onChangeSort"
         @search="onSearch"
         @change-page="page = $event"
         @toggle-panel="panelOpen = !panelOpen"
+        @toggle-wide="wide = !wide"
       >
         <template #preview>
-          <OverlayPreviewBox>
+          <OverlayPreviewBox :wide="wide">
             <OverlayGameSelect :games="games" :category="category" :sort="sort" :page="page" :total-pages="totalPages" />
           </OverlayPreviewBox>
         </template>
       </GameSelectView>
     </main>
-    <AppFooter />
+    <AppFooter :wide="wide && state !== 'guest' && panelOpen" />
   </div>
 </template>

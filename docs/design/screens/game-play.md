@@ -2,7 +2,7 @@
 
 - 파일: `src/views/GamePlayView.vue`
 - 게임별 빈 화면: `src/components/games/BalanceDebateScreen.vue`, `src/components/games/InterviewScreen.vue`
-- 와이어프레임: `../wireframes/game-play.png`
+- 와이어프레임: `../wireframes/game-play.png`, `../wireframes/broadcast-panel-wide.png` 위 ① (넓게 보기)
 - 종류: 조작 화면 (일반 웹 화면, 방송에 송출하지 않음). 로그인 후에만 들어옴 (주소 `/games/:id`)
 - 헤더, 푸터: `common-frame.md` 공통 프레임 사용
 - 방송 패널: `broadcast-panel.md` (**접기 없음**, 항상 펼침)
@@ -20,6 +20,8 @@
 - 오른쪽 : 방송 패널. 위쪽을 게임 정보 줄 위쪽에 맞춤. 높이는 내용만큼 (늘리지 않음). 스크롤해도 헤더 아래 고정 (sticky, `broadcast-panel.md`)
 - 본문 위 여백 48 (게임 목록과 같음), 게임 정보 줄과 슬롯 사이 24
 - 화면이 길어지면 브라우저 스크롤 (안에 따로 스크롤 만들지 않음)
+- **넓게 보기** (`broadcast-panel.md` "넓게 보기") : 본문 1776을 왼쪽 **856** / 간격 24 / 오른쪽 **896**으로 나눔. 게임 정보 줄과 게임별 화면 자리도 856
+- 게임별 화면은 **568과 856 두 폭**에서 모두 보기 좋게 만든다
 
 ## 요소
 
@@ -43,7 +45,7 @@
 - props, emit 없음
 
 ### 방송 패널
-- `BroadcastPanel`을 `collapsible: false`, `open: true`로 씀 ([미리보기 접기] 버튼 숨김)
+- `BroadcastPanel`을 `collapsible: false`, `open: true`로 씀 ([미리보기 접기] 버튼 숨김). [넓게 보기] 버튼은 있음 (`wide` 넘김)
 - 미리보기 칸(슬롯) : `OverlayGameReady`를 `OverlayPreviewBox`로 0.3배 줄여 넣음 (게임 아이콘, 이름이 이 화면의 게임과 같음)
 - 연결 상태는 **상태에 따라 하나만** 보임 (와이어프레임은 두 상태를 같이 그림)
 - 안내 문구는 `broadcast-panel.md` 그대로 (아래 "정할 것" 참고)
@@ -58,6 +60,7 @@
 |---|---|
 | [← 게임 목록으로] 클릭 | `back` |
 | 방송 패널 [복사] | `copy-url` |
+| 방송 패널 [넓게 보기] / [기본 크기] | `toggle-wide` |
 
 - 방송 패널의 동작은 `broadcast-panel.md`
 
@@ -67,6 +70,7 @@
 | game | Game \| null | 게임 정보. null이면 불러오는 중 모양 |
 | overlayUrl | string | 표출 URL (방송 패널로 넘김) |
 | connected | boolean | OBS 연결 여부 (방송 패널로 넘김) |
+| wide | boolean | 넓게 선택 여부 (방송 패널로 넘기고 배치에도 씀. 화면 조건은 CSS가 판단) |
 
 - 기본 슬롯 : 게임별 화면
 - 슬롯 `preview` : 방송 패널 미리보기 칸에 넣을 송출 화면
@@ -90,3 +94,4 @@ Game : `{ id, name, description, category, screen, icon, color }` (`game-select.
 - 화면 높이가 낮을 때 (방송 패널 sticky)
 - 좁은 너비 (768 ~ 1279) : 방송 패널이 위로 쌓임 (`broadcast-panel.md`)
 - 라이트 / 다크 모드
+- 넓게 보기 (게임별 화면이 856에서도 어색하지 않은지)

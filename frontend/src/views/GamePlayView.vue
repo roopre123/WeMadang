@@ -7,6 +7,7 @@
     game: Game | null      — 게임 정보. null이면 불러오는 중 모양 (같은 틀, 회색 상자)
     overlayUrl: string     — (방송 패널) 표출 URL
     connected: boolean     — (방송 패널) OBS 연결 여부
+    wide: boolean          — 넓게 보기 선택 여부 (default: false). 856 / 24 / 896 배치 + 방송 패널로 넘김. 화면 조건은 CSS가 판단
 
   slots:
     default                — 게임별 화면 (부모가 game.screen 값으로 골라 넣음)
@@ -15,6 +16,7 @@
   emits:
     back                   — [← 게임 목록으로] 클릭
     copy-url               — (방송 패널) [복사] 클릭
+    toggle-wide            — (방송 패널) [넓게 보기] / [기본 크기] 클릭
 -->
 <script setup lang="ts">
 import { IconArrowLeft } from '@tabler/icons-vue'
@@ -27,20 +29,23 @@ withDefaults(defineProps<{
   game: Game | null
   overlayUrl?: string
   connected?: boolean
+  wide?: boolean
 }>(), {
   overlayUrl: '',
   connected: false,
+  wide: false,
 })
 
 const emit = defineEmits<{
   back: []
   'copy-url': []
+  'toggle-wide': []
 }>()
 </script>
 
 <template>
   <section class="game-play">
-    <div class="container panel-layout">
+    <div class="container panel-layout" :class="{ 'is-wide': wide }">
 
       <div class="game-play-main">
         <div class="game-info-row">
@@ -74,6 +79,8 @@ const emit = defineEmits<{
         :collapsible="false"
         :overlay-url="overlayUrl"
         :connected="connected"
+        :wide="wide"
+        @toggle-wide="emit('toggle-wide')"
         @copy-url="emit('copy-url')"
       >
         <slot name="preview" />

@@ -7,12 +7,15 @@
     overlayUrl: string    — 표출 URL (default: '')
     connected: boolean    — OBS 연결 여부 (default: false)
     collapsible: boolean  — 접기 가능 여부. false면 항상 펼침 + [미리보기 접기] 숨김 (default: true)
+    wide: boolean         — 넓게 보기 선택 여부 (default: false). 패널 896, 미리보기 864×486.
+                            화면 조건(안쪽 폭 1824, 높이 800)은 CSS가 판단하고, 안 맞으면 [넓게 보기] 버튼도 숨김
 
   slots:
     default               — 미리보기 칸 (576×324, 송출 화면을 0.3배로 넣는다). 비어 있으면 검은 상자
 
   emits:
     toggle                — [미리보기 접기] / 퀵메뉴 버튼 클릭
+    toggle-wide           — [넓게 보기] / [기본 크기] 클릭
     copy-url              — [복사] 클릭
 
   접힘(퀵메뉴 버튼)일 때는 부모가 position: relative 이고 화면 폭 전체를 차지해야 한다 (layout.css .broadcast-quick-wrap).
@@ -20,22 +23,25 @@
 -->
 <script setup lang="ts">
 import { computed } from 'vue'
-import { IconBroadcast, IconChevronLeft, IconChevronRight } from '@tabler/icons-vue'
+import { IconArrowsHorizontal, IconBroadcast, IconChevronLeft, IconChevronRight } from '@tabler/icons-vue'
 
 const props = withDefaults(defineProps<{
   open?: boolean
   overlayUrl?: string
   connected?: boolean
   collapsible?: boolean
+  wide?: boolean
 }>(), {
   open: true,
   overlayUrl: '',
   connected: false,
   collapsible: true,
+  wide: false,
 })
 
 const emit = defineEmits<{
   toggle: []
+  'toggle-wide': []
   'copy-url': []
 }>()
 
@@ -44,9 +50,15 @@ const statusText = computed(() => (props.connected ? 'OBS 연결됨' : 'OBS 연�
 </script>
 
 <template>
-  <aside v-if="expanded" class="broadcast-panel panel-sticky">
+  <aside v-if="expanded" class="broadcast-panel panel-sticky" :class="{ 'is-wide': wide }">
     <div class="panel-head">
-      <h2 class="text-subheading">송출용 화면 미리보기</h2>
+      <div class="panel-title">
+        <h2 class="text-subheading">송출용 화면 미리보기</h2>
+        <button class="btn btn-secondary btn-sm wide-toggle" @click="emit('toggle-wide')">
+          <IconArrowsHorizontal size="16" stroke="2" />
+          {{ wide ? '기본 크기' : '넓게 보기' }}
+        </button>
+      </div>
       <button v-if="collapsible" class="btn btn-secondary btn-sm" @click="emit('toggle')">
         미리보기 접기
         <IconChevronRight size="16" stroke="2" />
@@ -98,11 +110,19 @@ const statusText = computed(() => (props.connected ? 'OBS 연결됨' : 'OBS 연�
   gap: var(--space-2);
 }
 
+/* 제목 + (사이 12) [넓게 보기] */
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-panel);
+  min-width: 0;
+}
+
 /* 송출 화면(1920×1080)의 0.3배. 연결 전에는 검은 상자 */
 .panel-preview {
-  width: var(--preview-width);
+  width: var(--preview-w);
   max-width: 100%;
-  height: var(--preview-height);
+  height: var(--preview-h);
   margin: 0 auto;
   overflow: hidden;
   background: var(--color-preview-bg);

@@ -7,12 +7,14 @@
     - 라이트 / 다크 (OS 설정과 별개로 강제 전환)
     - type 3가지 (없는 주소 / 없는 게임 / 불러오기 실패) × 로그인 전 / 로그인 후
     - 로그인 후: 방송 패널 (접기 없음, 미리보기 칸은 비어 있어 검은 상자), OBS 연결됨 / 안 됨
+    - 넓게 보기: 켜기 / 끄기 (로그인 후에만 적용). 1920×1000에서 856/896 배치, 너비 1823 / 높이 799에서는 기본 모양
 -->
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
 const width = ref(1920)
 const height = ref(1000)
+const wide = ref<'off' | 'on'>('on')
 const theme = ref<'light' | 'dark'>('light')
 const type = ref<'not-found-page' | 'not-found-game' | 'load-failed'>('not-found-game')
 const login = ref<'off' | 'on'>('on')
@@ -20,11 +22,12 @@ const obs = ref<'on' | 'off'>('on')
 
 const src = computed(
   () =>
-    `/preview/error-frame?type=${type.value}&login=${login.value}&obs=${obs.value}&theme=${theme.value}`,
+    `/preview/error-frame?type=${type.value}&login=${login.value}&obs=${obs.value}&wide=${wide.value}&theme=${theme.value}`,
 )
 
-const widths = [1920, 1024]
-const heights = [1000, 600]
+const widths = [1920, 1823, 1024]
+const heights = [1000, 799, 600]
+const wides = [['on', '넓게 켜기'], ['off', '넓게 끄기']] as const
 const themes = [['light', '라이트'], ['dark', '다크']] as const
 const types = [
   ['not-found-page', '없는 주소'],
@@ -78,6 +81,13 @@ const obsStates = [['on', 'OBS 연결됨'], ['off', 'OBS 연결 안 됨']] as co
           v-for="[v, label] in obsStates" :key="v"
           class="btn btn-sm" :class="obs === v ? 'btn-primary' : 'btn-secondary'"
           @click="obs = v"
+        >{{ label }}</button>
+      </div>
+      <div class="preset-buttons">
+        <button
+          v-for="[v, label] in wides" :key="v"
+          class="btn btn-sm" :class="wide === v ? 'btn-primary' : 'btn-secondary'"
+          @click="wide = v"
         >{{ label }}</button>
       </div>
     </div>

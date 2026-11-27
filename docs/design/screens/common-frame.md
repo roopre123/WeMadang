@@ -32,11 +32,13 @@
 - 현재 보고 있는 메뉴 강조 (`text` 색 + 굵게 + 포인트 브릿지 밑줄, design-rules.md "선택 표시" 참고)
 - 알림 버튼은 불필요하면 나중에 삭제 가능
 - 좁은 너비는 design-rules.md 반응형 규칙
+- **넓게 보기**가 적용된 화면에서는 헤더 안쪽 폭도 본문과 같은 **1776** (design-rules.md "화면 기준"). 적용 여부는 부모(App)가 `wide`로 알려줌. 넓게 보기가 없는 화면으로 가면 다시 1200 (헤더 양 끝이 움직이는 건 받아들임)
 
 ## 푸터
 - 푸터 배경과 위 구분선은 화면 끝까지, 안의 내용은 본문과 같은 1200px 폭 안에
 - 왼쪽: (로고 24px) 위마당은 치지직, 네이버와 제휴하지 않습니다.
 - 오른쪽: [이용약관] [개인정보처리방침] ©2026 wemadang
+- 넓게 보기가 적용된 화면에서는 안쪽 폭 1776 (헤더와 같음)
 
 ## 토스트
 - 잠깐 떴다 사라지는 안내 (로그인 성공·실패, 로그아웃 성공·실패, 알림, 저장 완료)
@@ -64,6 +66,8 @@
 | AppHeader | nickname | string | 치지직 닉네임 |
 | AppHeader | soundOn | boolean | 알림 켜짐 여부 |
 | AppHeader | activeMenu | string | 강조할 메뉴 |
+| AppHeader | wide | boolean | 넓게 보기 적용 여부 (true면 안쪽 폭 1776) |
+| AppFooter | wide | boolean | 넓게 보기 적용 여부 (true면 안쪽 폭 1776) |
 | AppToast | message | string | 안내 문구 |
 | AppToast | type | 'success' \| 'error' | 종류 |
 | AppModal | open | boolean | 열림 여부 |

@@ -1,15 +1,21 @@
 <!--
   AppFooter.vue — 공통 푸터 (조작 화면 전용)
 
-  props: 없음
+  props:
+    wide: boolean — 넓게 보기 적용 여부 (default: false). true면 안쪽 폭 1776 (화면 조건은 CSS가 판단)
   emits: 없음
 -->
 <script setup lang="ts">
+withDefaults(defineProps<{
+  wide?: boolean
+}>(), {
+  wide: false,
+})
 </script>
 
 <template>
   <footer class="app-footer">
-    <div class="footer-inner container">
+    <div class="footer-inner container" :class="{ 'is-wide': wide }">
 
       <!-- 왼쪽: 로고 + 제휴 안내 -->
       <div class="footer-left">

@@ -12,6 +12,7 @@
     loggedIn: boolean      — 로그인 여부 (방송 패널 표시)
     panelOpen: boolean     — 방송 패널 펼침 여부
     overlayUrl: string     — (방송 패널) 표출 URL
+    wide: boolean          — 넓게 보기 선택 여부 (default: false). 패널이 펼쳐져 있을 때만 적용 (856 / 24 / 896). 화면 조건은 CSS가 판단
     connected: boolean     — (방송 패널) OBS 연결 여부
 
   slots:
@@ -25,6 +26,7 @@
     change-page(page)      — 페이지 번호 클릭
     toggle-panel           — (방송 패널) 접기 / 펼치기
     copy-url               — (방송 패널) [복사] 클릭
+    toggle-wide            — (방송 패널) [넓게 보기] / [기본 크기] 클릭
 
   game-select.md의 props 표에는 overlayUrl, connected, preview 슬롯, toggle-panel / copy-url 이 없다.
   방송 패널(broadcast-panel.md)에 넘겨주기 위해 추가했다.
@@ -56,6 +58,7 @@ const props = withDefaults(
     panelOpen?: boolean
     overlayUrl?: string
     connected?: boolean
+    wide?: boolean
   }>(),
   {
     games: () => [],
@@ -68,6 +71,7 @@ const props = withDefaults(
     panelOpen: true,
     overlayUrl: '',
     connected: false,
+    wide: false,
   },
 )
 
@@ -79,6 +83,7 @@ const emit = defineEmits<{
   'change-page': [page: number]
   'toggle-panel': []
   'copy-url': []
+  'toggle-wide': []
 }>()
 
 // 검색칸은 Enter를 눌러야 검색하므로 입력 중인 글자는 따로 들고 있고, 부모가 바꾼 검색어만 따라간다
@@ -106,7 +111,7 @@ const isLastPage = computed(() => props.page >= props.totalPages)
 
 <template>
   <section class="game-select">
-    <div class="container game-select-body" :class="{ 'panel-layout': withPanel }">
+    <div class="container game-select-body" :class="{ 'panel-layout': withPanel, 'is-wide': withPanel && wide }">
       <div class="game-select-main">
         <div class="select-title">
           <h1 class="text-heading">게임 목록</h1>
@@ -232,7 +237,9 @@ const isLastPage = computed(() => props.page >= props.totalPages)
         :open="panelOpen"
         :overlay-url="overlayUrl"
         :connected="connected"
+        :wide="wide"
         @toggle="emit('toggle-panel')"
+        @toggle-wide="emit('toggle-wide')"
         @copy-url="emit('copy-url')"
       >
         <slot name="preview" />
@@ -325,7 +332,7 @@ const isLastPage = computed(() => props.page >= props.totalPages)
 }
 
 .panel-layout .game-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--panel-card-cols), minmax(0, 1fr));
 }
 
 .game-grid-item {
@@ -402,13 +409,13 @@ const isLastPage = computed(() => props.page >= props.totalPages)
 /* 패널 펼침(왼쪽 568): 첫 줄 분류 + 정렬, 둘째 줄 검색칸 (폭 전체), 두 줄 사이 16 */
 @media (min-width: 1280px) {
   .panel-layout .select-toolbar {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: var(--panel-toolbar-direction);
+    align-items: var(--panel-toolbar-align);
     gap: var(--space-3);
   }
 
   .panel-layout .search-box {
-    width: auto;
+    width: var(--panel-search-width);
   }
 }
 

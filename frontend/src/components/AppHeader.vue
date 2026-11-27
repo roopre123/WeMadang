@@ -8,6 +8,7 @@
     activeMenu: string        — 강조할 메뉴 이름 (default: '')
     delayValue: string | null — 딜레이 보정 값. null이면 '딜레이 미설정' (default: null)
                                 (wireframe 기준 추가; props 표 미기재)
+    wide: boolean             — 넓게 보기 적용 여부 (default: false). true면 안쪽 폭 1776 (화면 조건은 CSS가 판단)
 
   emits:
     login               — 로그인 클릭
@@ -25,12 +26,14 @@ withDefaults(defineProps<{
   soundOn?: boolean
   activeMenu?: string
   delayValue?: string | null
+  wide?: boolean
 }>(), {
   loggedIn: false,
   nickname: '',
   soundOn: true,
   activeMenu: '',
   delayValue: null,
+  wide: false,
 })
 
 const emit = defineEmits<{
@@ -46,7 +49,7 @@ const menus = ['게임 목록', '커뮤니티']
 
 <template>
   <header class="app-header">
-    <div class="header-inner container">
+    <div class="header-inner container" :class="{ 'is-wide': wide }">
 
       <!-- 로고 -->
       <a href="/" class="header-logo" @click.prevent="emit('navigate', '홈')">

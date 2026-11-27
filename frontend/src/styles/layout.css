@@ -19,15 +19,43 @@
 /* ---- 콘텐츠 최대 너비 ---- */
 .container {
   width: 100%;
-  max-width: calc(var(--container-width) + var(--space-4) * 2);
+  max-width: calc(var(--content-width) + var(--space-4) * 2);
   margin: 0 auto;
   padding: 0 var(--space-4);
+}
+
+/* ---- 넓게 보기 ----
+   화면 안쪽 폭 1824 이상(본문 1776 + 좌우 24) 그리고 높이 800 이상일 때만 켜진다. 아니면 기본 모양 + [넓게 보기] 버튼 숨김.
+   부모 화면이 wide를 받으면 해당 요소에 .is-wide 를 붙이고, 아래에서 변수만 바꾼다 (중간 크기, 애니메이션 없음).
+   미디어 쿼리 값은 CSS 변수로 쓸 수 없어서 숫자를 직접 쓴다 (1824 = 1776 + 48, 800 = 패널 약 680 + 헤더 64 + 위 24 + 여유). */
+.wide-toggle {
+  display: none;
+}
+
+@media (min-width: 1824px) and (min-height: 800px) {
+  .wide-toggle {
+    display: inline-flex;
+  }
+
+  .is-wide {
+    --content-width: var(--container-width-wide);
+    --col-main: var(--panel-main-width-wide);
+    --col-panel: var(--panel-width-wide);
+    --preview-w: var(--preview-width-wide);
+    --preview-h: var(--preview-height-wide);
+    --preview-scale: var(--preview-scale-wide);
+    /* 게임 목록 왼쪽 856: 카드 3열, 분류 + 정렬 + 검색칸 한 줄 */
+    --panel-card-cols: 3;
+    --panel-toolbar-direction: row;
+    --panel-toolbar-align: center;
+    --panel-search-width: var(--search-width);
+  }
 }
 
 /* ---- 본문 + 방송 패널 (왼쪽 568 / 간격 24 / 오른쪽 608) ---- */
 .panel-layout {
   display: grid;
-  grid-template-columns: var(--panel-main-width) var(--panel-width);
+  grid-template-columns: var(--col-main) var(--col-panel);
   gap: var(--space-4);
   align-items: start;
 }

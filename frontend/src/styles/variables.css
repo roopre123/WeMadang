@@ -97,6 +97,27 @@
   --quick-menu-width: 72px;
   --search-width: 280px;
   --card-min-height: 200px;
+
+  /* 넓게 보기 (design-rules.md "화면 기준", broadcast-panel.md "넓게 보기"). 켜지는 조건은 layout.css */
+  --container-width-wide: 1776px;
+  --panel-main-width-wide: 856px;
+  --panel-width-wide: 896px;
+  --preview-width-wide: 864px;
+  --preview-height-wide: 486px;
+  --preview-scale-base: 0.3;
+  --preview-scale-wide: 0.45;
+
+  /* 지금 적용되는 값 (기본 모양. 넓게 보기일 때 layout.css의 .is-wide가 바꿈) */
+  --content-width: var(--container-width);
+  --col-main: var(--panel-main-width);
+  --col-panel: var(--panel-width);
+  --preview-w: var(--preview-width);
+  --preview-h: var(--preview-height);
+  --preview-scale: var(--preview-scale-base);
+  --panel-card-cols: 2;
+  --panel-toolbar-direction: column;
+  --panel-toolbar-align: stretch;
+  --panel-search-width: auto;
   --game-screen-min-height: 400px;
   --error-top-gap: 120px;
 

@@ -22,6 +22,8 @@ const nickname = ref('스트리머')
 const soundOn = ref(true)
 const activeMenu = ref('게임 목록')
 const delayValue = ref<string | null>(null)
+// 넓게 보기: 헤더, 푸터 안쪽 폭 1776 (안쪽 폭 1824 이상, 높이 800 이상 화면에서만 보임)
+const wide = ref(false)
 
 type HeaderPreset = {
   label: string
@@ -78,6 +80,7 @@ const modalOpen = ref(false)
       :sound-on="soundOn"
       :active-menu="activeMenu"
       :delay-value="delayValue"
+      :wide="wide"
       @login="loggedIn = true"
       @logout="loggedIn = false"
       @toggle-sound="soundOn = !soundOn"
@@ -103,6 +106,15 @@ const modalOpen = ref(false)
               @click="applyPreset(i)"
             >
               {{ preset.label }}
+            </button>
+          </div>
+          <div class="preset-buttons wide-buttons">
+            <button
+              class="btn btn-sm"
+              :class="wide ? 'btn-primary' : 'btn-secondary'"
+              @click="wide = !wide"
+            >
+              넓게 보기 {{ wide ? '끄기' : '켜기' }} (헤더·푸터 안쪽 1776)
             </button>
           </div>
           <div class="state-info card">
@@ -153,7 +165,7 @@ const modalOpen = ref(false)
     </main>
 
     <!-- 푸터 -->
-    <AppFooter />
+    <AppFooter :wide="wide" />
 
     <!-- 토스트 -->
     <AppToast
@@ -211,6 +223,10 @@ const modalOpen = ref(false)
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+}
+
+.wide-buttons {
+  margin-top: var(--space-2);
 }
 
 .state-info {

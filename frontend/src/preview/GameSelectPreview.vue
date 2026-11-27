@@ -12,6 +12,7 @@
     - 예시 데이터: 21개 3페이지(마지막 페이지 3개) / 6개 1페이지(페이지 번호 숨김) / 100개 12페이지(번호 이동)
     - OBS 연결됨 / 안 됨, 표출 URL 짧음 / 김 (로그인 후)
     - 분류, 정렬, 검색(Enter), 페이지, 패널 접기·펼치기는 화면 안에서 직접 눌러 볼 수 있다
+    - 넓게 보기: 켜기 / 끄기. 1920×1000에서 856/896 배치, 너비 1823 / 높이 799에서는 기본 모양으로 돌아가고 [넓게 보기] 버튼도 숨김
 -->
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -21,6 +22,7 @@ const state = String(useRoute().meta.state ?? 'guest')
 
 const width = ref(1920)
 const height = ref(1000)
+const wide = ref<'off' | 'on'>('on')
 const theme = ref<'light' | 'dark'>('light')
 const data = ref<'basic' | 'one' | 'many'>('basic')
 const obs = ref<'on' | 'off'>('on')
@@ -28,11 +30,12 @@ const url = ref<'short' | 'long'>('short')
 
 const src = computed(
   () =>
-    `/preview/game-select-frame?state=${state}&theme=${theme.value}&data=${data.value}&obs=${obs.value}&url=${url.value}`,
+    `/preview/game-select-frame?state=${state}&theme=${theme.value}&data=${data.value}&obs=${obs.value}&url=${url.value}&wide=${wide.value}`,
 )
 
-const widths = [1920, 1024]
-const heights = [1000, 600]
+const widths = [1920, 1823, 1024]
+const heights = [1000, 799, 600]
+const wides = [['on', '넓게 켜기'], ['off', '넓게 끄기']] as const
 const themes = [['light', '라이트'], ['dark', '다크']] as const
 const datas = [['basic', '21개 (3페이지)'], ['one', '6개 (1페이지)'], ['many', '100개 (12페이지)']] as const
 const obsStates = [['on', 'OBS 연결됨'], ['off', 'OBS 연결 안 됨']] as const
@@ -87,6 +90,13 @@ const loggedIn = state !== 'guest'
           >{{ label }}</button>
         </div>
       </template>
+      <div class="preset-buttons">
+        <button
+          v-for="[v, label] in wides" :key="v"
+          class="btn btn-sm" :class="wide === v ? 'btn-primary' : 'btn-secondary'"
+          @click="wide = v"
+        >{{ label }}</button>
+      </div>
     </div>
 
     <div class="preview-stage">

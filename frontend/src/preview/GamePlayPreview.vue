@@ -8,12 +8,14 @@
     - 게임 정보 있음 / 불러오는 중(null) / 긴 이름 / 아이콘 없는 게임
     - 슬롯: BalanceDebateScreen / InterviewScreen
     - 방송 패널 미리보기: OverlayGameReady 0.3배 (접기 버튼 없음), OBS 연결됨 / 안 됨
+    - 넓게 보기: 켜기 / 끄기. 1920×1000에서 856/896 배치, 너비 1823 / 높이 799에서는 기본 모양으로 돌아가고 [넓게 보기] 버튼도 숨김
 -->
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
 const width = ref(1920)
 const height = ref(1000)
+const wide = ref<'off' | 'on'>('on')
 const theme = ref<'light' | 'dark'>('light')
 const game = ref<'normal' | 'loading' | 'long' | 'noicon'>('normal')
 const screen = ref<'debate' | 'interview'>('debate')
@@ -21,11 +23,12 @@ const obs = ref<'on' | 'off'>('on')
 
 const src = computed(
   () =>
-    `/preview/game-play-frame?game=${game.value}&screen=${screen.value}&obs=${obs.value}&theme=${theme.value}`,
+    `/preview/game-play-frame?game=${game.value}&screen=${screen.value}&obs=${obs.value}&wide=${wide.value}&theme=${theme.value}`,
 )
 
-const widths = [1920, 1024]
-const heights = [1000, 600]
+const widths = [1920, 1823, 1024]
+const heights = [1000, 799, 600]
+const wides = [['on', '넓게 켜기'], ['off', '넓게 끄기']] as const
 const themes = [['light', '라이트'], ['dark', '다크']] as const
 const gameStates = [
   ['normal', '게임 정보 있음'],
@@ -80,6 +83,13 @@ const obsStates = [['on', 'OBS 연결됨'], ['off', 'OBS 연결 안 됨']] as co
           v-for="[v, label] in obsStates" :key="v"
           class="btn btn-sm" :class="obs === v ? 'btn-primary' : 'btn-secondary'"
           @click="obs = v"
+        >{{ label }}</button>
+      </div>
+      <div class="preset-buttons">
+        <button
+          v-for="[v, label] in wides" :key="v"
+          class="btn btn-sm" :class="wide === v ? 'btn-primary' : 'btn-secondary'"
+          @click="wide = v"
         >{{ label }}</button>
       </div>
     </div>

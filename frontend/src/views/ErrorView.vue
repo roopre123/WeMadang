@@ -8,6 +8,7 @@
     loggedIn: boolean      — 로그인 여부 (true면 방송 패널 표시, 접기 없음)
     overlayUrl: string     — (방송 패널) 표출 URL
     connected: boolean     — (방송 패널) OBS 연결 여부
+    wide: boolean          — 넓게 보기 선택 여부 (default: false). 로그인 후에만 의미 있음 (856 / 24 / 896). 화면 조건은 CSS가 판단
 
   slots:
     preview                — (방송 패널) 미리보기 칸. 비어 있으면 검은 상자
@@ -17,6 +18,7 @@
     go-games               — [게임 목록으로] 클릭
     retry                  — [다시 시도] 클릭
     copy-url               — (방송 패널) [복사] 클릭
+    toggle-wide            — (방송 패널) [넓게 보기] / [기본 크기] 클릭
 
   이동과 다시 불러오기는 부모가 처리한다.
 -->
@@ -32,10 +34,12 @@ const props = withDefaults(defineProps<{
   loggedIn?: boolean
   overlayUrl?: string
   connected?: boolean
+  wide?: boolean
 }>(), {
   loggedIn: false,
   overlayUrl: '',
   connected: false,
+  wide: false,
 })
 
 const emit = defineEmits<{
@@ -43,6 +47,7 @@ const emit = defineEmits<{
   'go-games': []
   retry: []
   'copy-url': []
+  'toggle-wide': []
 }>()
 
 const contents = {
@@ -68,7 +73,7 @@ const content = computed(() => contents[props.type])
 
 <template>
   <section class="error-view">
-    <div class="container" :class="{ 'panel-layout': loggedIn }">
+    <div class="container" :class="{ 'panel-layout': loggedIn, 'is-wide': loggedIn && wide }">
 
       <div class="error-main">
         <div class="error-box">
@@ -97,6 +102,8 @@ const content = computed(() => contents[props.type])
         :collapsible="false"
         :overlay-url="overlayUrl"
         :connected="connected"
+        :wide="wide"
+        @toggle-wide="emit('toggle-wide')"
         @copy-url="emit('copy-url')"
       >
         <slot name="preview" />
