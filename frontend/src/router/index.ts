@@ -64,6 +64,26 @@ const router = createRouter({
       meta: { noFrame: true },
     },
     {
+      path: '/preview/game-play',
+      component: () => import('../preview/GamePlayPreview.vue'),
+      meta: { noFrame: true },
+    },
+    {
+      path: '/preview/game-play-frame',
+      component: () => import('../preview/GamePlayFramePreview.vue'),
+      meta: { noFrame: true },
+    },
+    {
+      path: '/preview/error',
+      component: () => import('../preview/ErrorPreview.vue'),
+      meta: { noFrame: true },
+    },
+    {
+      path: '/preview/error-frame',
+      component: () => import('../preview/ErrorFramePreview.vue'),
+      meta: { noFrame: true },
+    },
+    {
       path: '/preview/overlay-game-ready',
       component: () => import('../preview/OverlayGameReadyPreview.vue'),
       meta: { noFrame: true },

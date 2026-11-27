@@ -97,6 +97,8 @@
   --quick-menu-width: 72px;
   --search-width: 280px;
   --card-min-height: 200px;
+  --game-screen-min-height: 400px;
+  --error-top-gap: 120px;
 
   /* 문서에 정해진 간격 (간격 단계 4/8/16/24/32/48/64 밖의 값) */
   --space-panel: 12px;

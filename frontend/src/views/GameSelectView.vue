@@ -354,15 +354,6 @@ const isLastPage = computed(() => props.page >= props.totalPages)
   min-width: 0;
 }
 
-.category-pill {
-  padding: 0 var(--space-pill-x);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
-  color: var(--color-text-sub);
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-body);
-}
-
 .game-name {
   max-width: 100%;
   overflow: hidden;
