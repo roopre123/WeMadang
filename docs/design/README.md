@@ -11,6 +11,8 @@
   - `broadcast-panel.md` : 방송 패널 (송출용 화면 미리보기, 로그인 후 게임 목록·게임 화면 공통)
   - `overlay-game-select.md` : 송출 화면 - 게임 목록
   - `overlay-game-ready.md` : 송출 화면 - 게임 첫 화면 (준비 중)
+  - `game-play.md` : 게임 화면 공통 틀 + 게임별 빈 화면 (스프린트 3)
+  - `error.md` : 공통 에러 화면 (없는 주소, 없는 게임, 불러오기 실패) (스프린트 3)
 - `wireframes/` : 화면별 와이어프레임 이미지 (`screens/`의 파일명과 같은 이름, 데스크톱 한 장. 상태가 여러 개면 `-guest`, `-login`처럼 뒤에 붙임)
 - 와이어프레임은 구성(무엇이 어디에)만 보고, 크기·간격 숫자는 `design-rules.md`와 `screens/` 문서를 따른다
 
